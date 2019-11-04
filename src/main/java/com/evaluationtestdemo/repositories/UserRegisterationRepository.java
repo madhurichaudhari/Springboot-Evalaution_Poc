@@ -1,0 +1,22 @@
+package com.evaluationtestdemo.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import com.evaluationtestdemo.entities.User;
+
+
+
+/**
+ * @author MadhuriC
+ *JpaRepository for creating UserRepository
+ */
+@Repository
+public interface UserRegisterationRepository  extends JpaRepository<User, Long> {
+	/**
+	 * @param mobile
+	 * @param email
+	 * @return User
+	 */
+	User findByMobileOrEmail(String mobile,String email);
+	
+	}
