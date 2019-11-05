@@ -48,7 +48,7 @@ public class ChangePasswordController {
 			if (userdata != null) {
 				if (passwordEncoder.matches(changepassword.getOldpassword(), userdata.getPassword())) {
 					int resp = passwordService.updatepassword((userdata.getEmail()),
-							changepassword.getConfirmpassword());
+							changepassword.getConfirmpassword(),passwordEncoder);
 					userdata.setChangePasswordStatus("T");
 				
 					passwordService.updatechangePasswordStatusrById(userdata.getEmail(),userdata.getChangePasswordStatus() );

@@ -2,6 +2,7 @@
 package com.evaluationtestdemo.servicesimp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.evaluationtestdemo.entities.User;
@@ -24,12 +25,11 @@ public class UserServiceImpl implements UserRegisterationService {
 	@Autowired
 	UserRegisterationRepository repository;
 
-	@Autowired
-	EmailUtil emailUtil;
+	
 
 	@Override
-	public User addUser(User user, EmailRequestModel emailRequestModel) {
-		emailUtil.sendEmail(emailRequestModel);
+	public User addUser(EmailUtil emailUtil,JavaMailSender javaMailSender,User user, EmailRequestModel emailRequestModel) {
+		emailUtil.sendEmail(javaMailSender,emailRequestModel);
 		User muser = repository.save(user);
 
 		return muser;

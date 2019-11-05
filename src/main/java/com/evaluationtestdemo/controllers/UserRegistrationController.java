@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import com.evaluationtestdemo.responsemodels.ResponseModel;
 import com.evaluationtestdemo.responsemodels.SignupResponse;
 import com.evaluationtestdemo.servicesimp.UserServiceImpl;
 import com.evaluationtestdemo.utils.AppConstant;
+import com.evaluationtestdemo.utils.EmailUtil;
 import com.evaluationtestdemo.utils.MiscUtil;
 
 /**
@@ -37,6 +39,12 @@ public class UserRegistrationController extends AppConstant {
 	/*** Creating bean of PasswordEncoder */
 	@Autowired(required = false)
 	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	EmailUtil emailUtil;
+	
+	 @Autowired
+	 private JavaMailSender javaMailSender;
 
 	/**
 	 * @param user
@@ -62,7 +70,7 @@ public class UserRegistrationController extends AppConstant {
                 	}
 				user.setCreatedBy(user.getCreatedBy());
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
-				userService.addUser(user,
+				userService.addUser(emailUtil,javaMailSender,user,
 						new EmailRequestModel(user.getEmail(), VERIFY_OTP_FOR_SIGNUP, "Otp is " + otp));
 				return new ResponseEntity<Object>(
 						new ResponseModel(true, "Successfully Created", new SignupResponse(user.getFirstName(),

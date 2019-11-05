@@ -1,8 +1,8 @@
 package com.evaluationtestdemo.servicesimp;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.evaluationtestdemo.repositories.OtpVerifyRepository;
 import com.evaluationtestdemo.services.OtpService;
 
@@ -18,11 +18,8 @@ import com.evaluationtestdemo.services.OtpService;
 @Transactional
 public class OtpServiceImp implements OtpService {
 	
-	@Autowired(required = false)
-	private OtpVerifyRepository otpVerifyRepository;
-
 	@Override
-	public int otpVerified(String isOtpStatus, Long id) {
+	public int otpVerified(OtpVerifyRepository otpVerifyRepository,String isOtpStatus, Long id) {
 		int otpVerified= otpVerifyRepository.updateisOtpVerifiedById(isOtpStatus, id);
 		return otpVerified;
 	}

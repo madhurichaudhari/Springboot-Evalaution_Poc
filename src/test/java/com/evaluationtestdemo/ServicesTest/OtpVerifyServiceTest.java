@@ -8,14 +8,18 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.evaluationtestdemo.entities.User;
 import com.evaluationtestdemo.repositories.LoginRepository;
-import com.evaluationtestdemo.requestmodels.OtpRequestModel;
-import com.evaluationtestdemo.services.LoginService;
-import com.evaluationtestdemo.services.OtpService;
+import com.evaluationtestdemo.repositories.OtpVerifyRepository;
+import com.evaluationtestdemo.servicesimp.LoginServiceImp;
+import com.evaluationtestdemo.servicesimp.OtpServiceImp;
 
 /**
  * @author MadhuriC
@@ -26,19 +30,29 @@ import com.evaluationtestdemo.services.OtpService;
 @SpringBootTest
 class OtpVerifyServiceTest {
 
-	@Autowired
+	@Mock
 	LoginRepository loginRepo;
 	
-	@Autowired
-	LoginService loginService;
-	@Autowired
-	OtpService otpService;
+	@Mock
+	OtpVerifyRepository otpRepo;
 
+	@InjectMocks
+	LoginServiceImp loginService;
+
+	@InjectMocks
+	OtpServiceImp otpServiceImp;
+
+	@Mock
+	OtpVerifyRepository otpVfyRepository;
+
+	/**
+	 * 
+	 */
 	@Before
 	public void setup() {
-		
-	  }
+		MockitoAnnotations.initMocks(this);
 
+	}
 
 	/**
 	 * Test method for
@@ -46,11 +60,13 @@ class OtpVerifyServiceTest {
 	 */
 	@Test
 	public void testVerifyOtp() {
-		OtpRequestModel otpRequestModel = new OtpRequestModel();
-		otpRequestModel.setEmail("madhurichaudhari905@gmail.com");
-		otpRequestModel.setOtp("06461");
-		User user = loginService.findByEmail(otpRequestModel.getEmail());
-		int status = otpService.otpVerified("T", user.getId());
+		User user = new User();
+		user.setEmail("madhurichaudhari905@gmail.com");
+		user.setOtp("06461");
+		Mockito.when(loginRepo.findByEmail(user.getEmail())).thenReturn(user);
+		User userStatus = loginService.findByEmail(user.getEmail());
+		Mockito.when(otpServiceImp.otpVerified(otpVfyRepository,"T", userStatus.getId())).thenReturn(1);
+		int status = otpServiceImp.otpVerified(otpVfyRepository,"T", userStatus.getId());
 		assertEquals(1, status);
 
 	}

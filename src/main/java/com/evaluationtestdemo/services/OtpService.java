@@ -1,5 +1,7 @@
 package com.evaluationtestdemo.services;
 
+import com.evaluationtestdemo.repositories.OtpVerifyRepository;
+
 /**
  * @author MadhuriC
  *
@@ -7,11 +9,12 @@ package com.evaluationtestdemo.services;
 public interface OtpService {
 
 	/**
+	 * @param otpVerifyRepository 
 	 * @param isOtpStatus
 	 * @param id
 	 * @return
 	 */
-	public int otpVerified(String isOtpStatus,Long id);
+	public int otpVerified(OtpVerifyRepository otpVerifyRepository,String isOtpStatus,Long id);
 	
 }
 

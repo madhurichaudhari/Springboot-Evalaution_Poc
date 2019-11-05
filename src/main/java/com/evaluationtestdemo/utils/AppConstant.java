@@ -1,24 +1,43 @@
 
 package com.evaluationtestdemo.utils;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+
 
 /**
  * @author MadhuriC
  *
  */
 
-
 public class AppConstant {
-
 	
+	
+
+	public static final Contact DEFAULT_CONTACT = new Contact("Madhuri Chaudhari",
+			"http://www.hcl.com <http://www.hcl.com> ",
+			"madhuric@hcl.com");
+
+	public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("EvaluationDemo API",
+			"EvaluationDemo API for cleint implementation.", "1.0", "urn:tos", DEFAULT_CONTACT, "evaluationV1.0",
+
+			"http://www.hcl.com <http://www.hcl.com> ");
+
+	public static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<String>(
+
+			Arrays.asList("application/json"));
+
 	/**
 	 * USER_LOGIN_SUCCESS
 	 */
 	public static final String USER_LOGIN_SUCCESS = "User Login Successfully";
-	
+
 	/**
 	 * USER_FIRST_TIME
 	 */
-	public static final String USER_FIRST_TIME="You are  first time login,so please change the password ";
+	public static final String USER_FIRST_TIME = "You are  first time login,so please change the password ";
 	/**
 	 * USER_OTP_NOT_VERIFIED
 	 */
@@ -47,9 +66,7 @@ public class AppConstant {
 	public static final String EMAIL_SUBJECT = "Car Pool :: Forget-Password";
 	public static final String USER_NOT_FOUND = "User Not Found";
 	public static final String USER_REGISTRATION_NOT_COMPLETE = "User Registration Is Not Complete";
-	
 	public static final String USER_EMAIL_MOBILE_EXIST = "User Mobile or Email already exist";
-	
 	public static final String VERIFY_OTP_FOR_SIGNUP = "Verify Otp for signup";
-	
+
 }

@@ -2,14 +2,21 @@ package com.evaluationtestdemo.ServicesTest;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.evaluationtestdemo.entities.User;
+import com.evaluationtestdemo.repositories.UserRegisterationRepository;
 import com.evaluationtestdemo.requestmodels.EmailRequestModel;
-import com.evaluationtestdemo.services.UserRegisterationService;
+import com.evaluationtestdemo.servicesimp.UserServiceImpl;
+import com.evaluationtestdemo.utils.EmailUtil;
 
 /**
  * @author MadhuriC
@@ -18,18 +25,31 @@ import com.evaluationtestdemo.services.UserRegisterationService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserRegisterationServiceTest {
-
 	
-	  @Autowired
-	  UserRegisterationService userService;
+	@Mock
+	UserRegisterationRepository userRep;
+	@InjectMocks
+	UserServiceImpl userRegImp;
+	@InjectMocks
+	EmailUtil emailUtil;
+	@Mock
+	JavaMailSender javaMailSender;
 	
+	/**
+	 * Initialize Mocked
+	 */
+	@Before
+	public void setup() {
+		
+		MockitoAnnotations.initMocks(this);
+		
+	  }
 	/**
 	 * test user Registration
 	 */
 
 	@Test
 	public void testUserRegistration1() {
-	
 		EmailRequestModel emailRequestModel = new EmailRequestModel("androidhcl@12345", "OTP send",
 				"verify Otp for SignUp");
 		User user  = new User();
@@ -42,8 +62,9 @@ public class UserRegisterationServiceTest {
 		user.setChangePasswordStatus("T");
 		user.setCreatedBy("admin");
 		user.setGender("female");
-		User userResult = userService.addUser(user, emailRequestModel);
-		assertEquals("Madhuri", userResult.getFirstName());
+		Mockito.when(userRep.save(user)).thenReturn(user);
+		User userResult = userRegImp.addUser(emailUtil,javaMailSender,user, emailRequestModel);
+		assertEquals("chaudhari", userResult.getFirstName());
 	}
 
 	/**
@@ -63,8 +84,8 @@ public class UserRegisterationServiceTest {
 		user.setChangePasswordStatus("F");
 		user.setCreatedBy("user");
 		user.setGender("male");
-		User userResult = userService.addUser(user, emailRequestModel);
-		assertEquals("Sujeet", userResult.getFirstName());
+		Mockito.when(userRep.save(user)).thenReturn(user);
+		User userResult = userRegImp.addUser(emailUtil,javaMailSender,user, emailRequestModel);
+		assertEquals("Ajeet", userResult.getFirstName());
 	}
-
 }

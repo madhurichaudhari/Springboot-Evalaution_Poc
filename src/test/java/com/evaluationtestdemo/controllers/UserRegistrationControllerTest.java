@@ -20,9 +20,7 @@ import com.evaluationtestdemo.utils.JunitUtils;
  */
 class UserRegistrationControllerTest extends JunitUtils {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+	
 	@BeforeEach
 	public void setUp() {
 		super.setUp();

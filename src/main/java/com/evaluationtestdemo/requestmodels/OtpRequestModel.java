@@ -16,6 +16,20 @@ public class OtpRequestModel {
 	private String otp;
 	private String createdBy;
 	private String isOtpVerified;
+	
+	/**
+	 * @return
+	 */
+	public String getIs_otp_verified() {
+		return isOtpVerified;
+	}
+
+	/**
+	 * @param is_otp_verified
+	 */
+	public void setIs_otp_verified(String is_otp_verified) {
+		this.isOtpVerified = is_otp_verified;
+	}
 	/**
 	 * @return
 	 */
