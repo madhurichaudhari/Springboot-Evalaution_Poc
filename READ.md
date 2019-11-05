@@ -17,7 +17,8 @@ For building and running the application you need:
 2.Request Json & Response(http://localhost:8080/swagger-ui.html )
 3.Run JUnit
 4.DockerFile
-5.Docker Image(docker pull madhuchaudhari1/spring-boot-evaluation:01)
+5.Docker Image(docker pull madhuchaudhari1/spring-boot-evaluation:04)
 6.pom.xml
 7.application.properties
+8 embedded database(H2 Database)
 
