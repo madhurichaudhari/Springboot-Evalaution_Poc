@@ -1,11 +1,10 @@
 package com.evaluationtestdemo.services;
 import javax.transaction.Transactional;
 
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.requestmodels.EmailRequestModel;
-import com.evaluationtestdemo.utils.EmailUtil;
+import com.evaluationtestdemo.servicesimp.UserModel;
 
 
 
@@ -17,13 +16,11 @@ import com.evaluationtestdemo.utils.EmailUtil;
 @Transactional
 public interface UserRegisterationService {
 	/**
-	 * @param emailUtil 
-	 * @param javaMailSender 
-	 * @param user
-	 * @param email
+	
+	 * @param userModel
 	 * @return User
 	 */
-	public User addUser(EmailUtil emailUtil, JavaMailSender javaMailSender,User user, EmailRequestModel email);
+	public User addUser(UserModel userModel);
 	/**
 	 * @param mobile
 	 * @param email
@@ -31,4 +28,9 @@ public interface UserRegisterationService {
 	 * @return User
 	 */
 	public User checkUserEmailAndPhone(String mobile, String email, String userType);
+	
+	/**
+	 * @return
+	 */
+	public String createRandomOtp();
 }

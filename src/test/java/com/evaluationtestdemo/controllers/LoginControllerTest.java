@@ -5,13 +5,20 @@ package com.evaluationtestdemo.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.evaluationtestdemo.entities.User;
 import com.evaluationtestdemo.requestmodels.LoginRequestModel;
+import com.evaluationtestdemo.services.LoginService;
+import com.evaluationtestdemo.servicesimp.LoginServiceImp;
 import com.evaluationtestdemo.utils.JunitUtils;
 
 /**
@@ -19,8 +26,11 @@ import com.evaluationtestdemo.utils.JunitUtils;
  *
  */
 class LoginControllerTest extends JunitUtils{
+	
+	@Mock
+	private LoginService loginService;
 
-	@BeforeEach
+	@Before
 	public void setUp() {
 		super.setUp();
 	}
@@ -30,36 +40,16 @@ class LoginControllerTest extends JunitUtils{
 	@Test
 	void testLogin() {
 		String uri = "/user/login";
-		try {
 			LoginRequestModel loginRequestModel = new LoginRequestModel();
 			loginRequestModel.setEmail("ajeetkumar@gmail.com");
 			loginRequestModel.setPassword("ajeet1");
-			String inputJson = super.mapToJson(loginRequestModel);
-			MvcResult mvcResult = mvc.perform(
-					MockMvcRequestBuilders.post(uri).
-					contentType(MediaType.APPLICATION_JSON_VALUE).
-					content(inputJson))
-					.andReturn();
-			int status = mvcResult.getResponse().getStatus();
-			mvcResult.getResponse().getStatus();
-			assertEquals(200, status);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		}
-
-	/**
-	 * Test method for {@link com.evaluationtestdemo.controllers.LoginController#adminLogin(com.evaluationtestdemo.requestmodels.LoginRequestModel)}.
-	 */
-	@Test
-	void testAdminLogin() {
-		
-		String uri = "/user/login";
+			User user=new User();
+			user.setEmail(loginRequestModel.getEmail());
+			user.setPassword(loginRequestModel.getPassword());
+			Mockito.when(loginService.validateUserEmail(loginRequestModel.getEmail())).thenReturn(true);
+			Mockito.when(loginService.validateUserOtpVerified(loginRequestModel.getEmail(), loginRequestModel.getPassword())).thenReturn(true);
+			Mockito.when(loginService.findByEmail(loginRequestModel.getEmail())).thenReturn(user);
 		try {
-			LoginRequestModel loginRequestModel = new LoginRequestModel();
-			loginRequestModel.setEmail("madhurichaudhari905@gmail.com");
-			loginRequestModel.setPassword("madhuri");
 			String inputJson = super.mapToJson(loginRequestModel);
 			MvcResult mvcResult = mvc.perform(
 					MockMvcRequestBuilders.post(uri).
@@ -73,9 +63,6 @@ class LoginControllerTest extends JunitUtils{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-	}
+		}
 
 }

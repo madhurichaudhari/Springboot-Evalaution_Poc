@@ -1,9 +1,7 @@
 package com.evaluationtestdemo.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 import com.evaluationtestdemo.entities.User;
 
 
@@ -20,10 +18,11 @@ public interface LoginRepository extends JpaRepository<User, Long>{
     /**
      * @param email
      * @param password
-     * @param isOtpVerified
+     * @param otpVerifiedStatus 
+   
      * @return
      */
-    boolean existsByEmailAndPasswordAndIsOtpVerified(String email,String password,String isOtpVerified);
+    boolean existsByEmailAndPasswordAndOtpVerifiedStatus(String email,String password,boolean otpVerifiedStatus);
     /**
      * @param email
      * @return

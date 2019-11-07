@@ -3,7 +3,7 @@ package com.evaluationtestdemo.requestmodels;
 /**
  * @author MadhuriC
  * 
- *         ChangePasswordRequestModel for change Password
+ * ChangePasswordRequestModel for change Password
  *
  */
 public class ChangePasswordRequestModel {
@@ -13,20 +13,34 @@ public class ChangePasswordRequestModel {
 	private String newpassword;
 	private String confirmpassword;
 	private String email;
-	private String changePasswordStatus;
+	private boolean changePasswordStatus;
 
-	public String getChangePasswordStatus() {
+
+
+	/**
+	 * @return
+	 */
+	public boolean isChangePasswordStatus() {
 		return changePasswordStatus;
 	}
 
-	public void setChangePasswordStatus(String changePasswordStatus) {
+	/**
+	 * @param changePasswordStatus
+	 */
+	public void setChangePasswordStatus(boolean changePasswordStatus) {
 		this.changePasswordStatus = changePasswordStatus;
 	}
 
+	/**
+	 * @return email
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * @param email
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}

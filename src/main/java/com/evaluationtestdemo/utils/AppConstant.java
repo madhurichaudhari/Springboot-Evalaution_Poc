@@ -14,26 +14,27 @@ import springfox.documentation.service.Contact;
 
 public class AppConstant {
 	
-	
-
-	public static final Contact DEFAULT_CONTACT = new Contact("Madhuri Chaudhari",
-			"http://www.hcl.com <http://www.hcl.com> ",
+	/**
+	 * Contact
+	 */
+	public static final Contact DEFAULT_CONTACT = new Contact("Madhuri Chaudhari","http://www.hcl.com <http://www.hcl.com> ",
 			"madhuric@hcl.com");
-
+	/**
+	 * ApiInfo
+	 */
 	public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("EvaluationDemo API",
 			"EvaluationDemo API for cleint implementation.", "1.0", "urn:tos", DEFAULT_CONTACT, "evaluationV1.0",
-
 			"http://www.hcl.com <http://www.hcl.com> ");
 
-	public static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<String>(
-
-			Arrays.asList("application/json"));
+	/**
+	 * DEFAULT_PRODUCES_AND_CONSUMES
+	 */
+	public static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<String>(Arrays.asList("application/json"));
 
 	/**
 	 * USER_LOGIN_SUCCESS
 	 */
 	public static final String USER_LOGIN_SUCCESS = "User Login Successfully";
-
 	/**
 	 * USER_FIRST_TIME
 	 */
@@ -55,9 +56,11 @@ public class AppConstant {
 	public static final String SUCCESS_FULLY_UPDATED = "Successfully updated.";
 	public static final String BAD_REQUEST = "Bad request.";
 	public static final String SUCCESS = "Success";
+	public static final String FAIL = "Failure";
 	public static final String SUCCESSFULLY_PWD_SEND = "Password send to your email.";
 	public static final String EMAIL_NOT_EXIST = "Email not exist.";
 	public static final String SUCCESSFULLY_PWD_CHANGED = "Password changed succesfully";
+	public static final String SUCCESSFULLY_PWD_NOT_CHANGED = "Password does not changed ";
 	public static final String PWD_MATCHED_FAILED = "Old Password dose not match.";
 	public static final String Yes = "T";
 	public static final String No = "F";

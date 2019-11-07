@@ -1,7 +1,5 @@
 package com.evaluationtestdemo.services;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 /*
  *  for creating PasswordService for 
  */
@@ -18,13 +16,20 @@ public interface ChangePasswordService {
 	 * @param passwordEncoder TODO
 	 * @return
 	 */
-	public int updatepassword( String email, String Password, PasswordEncoder passwordEncoder);
+	public int updatepassword( String email, String Password);
 	/**
 	 * @param email
 	 * @param changePasswordstatus
+	 * @return 
 	 */
-	public int updatechangePasswordStatusrById(String email, String changePasswordstatus);
+	public int updatechangePasswordStatusrById(String email, boolean changePasswordstatus);
 	
-	
+	/**
+	 * @param oldpassword
+	 * @param password
+	 * @return
+	 */
+	public boolean getMatchPassword(String oldpassword, String password);
 
 }
+

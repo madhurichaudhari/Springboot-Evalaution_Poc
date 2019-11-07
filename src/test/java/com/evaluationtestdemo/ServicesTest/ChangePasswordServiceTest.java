@@ -61,8 +61,7 @@ public class ChangePasswordServiceTest {
 		Mockito.when(passwordEncoder.encode("madhuri")).thenReturn("");
 		Mockito.when(loginRepository.findByEmail(user.getEmail())).thenReturn(user);
 		Mockito.when(passwordRepository.UpdateUserById(passwordEncoder.encode("madhuri"), user.getId())).thenReturn(1);
-		int changePasswordSatus = changePassSerImp.updatepassword("madhurichaudhari905@gmail.com", "madhuri",
-				passwordEncoder);
+		int changePasswordSatus = changePassSerImp.updatepassword("madhurichaudhari905@gmail.com", "madhuri");
 		assertEquals(1, changePasswordSatus);
 	}
 
@@ -77,9 +76,9 @@ public class ChangePasswordServiceTest {
 		user.setPassword("madhuri");
 		user.setId(1);
 		Mockito.when(loginRepository.findByEmail(user.getEmail())).thenReturn(user);
-		Mockito.when(passwordRepository.updateChangePasswordStatusrById("T", user.getId())).thenReturn(1);
-		int changePasswordSatus = changePassSerImp.updatechangePasswordStatusrById("madhurichaudhari905@gmail.com","T");
+		Mockito.when(passwordRepository.updateChangePasswordStatusrById(true, user.getId())).thenReturn(1);
+		int changePasswordSatus = changePassSerImp.updatechangePasswordStatusrById("madhurichaudhari905@gmail.com",true);
 		assertEquals(1, changePasswordSatus);
-	}
+}
 
 }

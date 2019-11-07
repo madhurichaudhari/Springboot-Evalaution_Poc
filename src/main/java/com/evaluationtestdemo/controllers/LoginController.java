@@ -25,7 +25,7 @@ import com.evaluationtestdemo.utils.AppConstant;
 public class LoginController extends AppConstant {
 
 	/*** Creating bean of LoginService */
-	@Autowired(required = false)
+	@Autowired
 	private LoginServiceImp loginService;
 
 	/***
@@ -41,7 +41,7 @@ public class LoginController extends AppConstant {
 						&& loginService.validateUserPassword(loginRequest.getPassword(), loginRequest.getEmail())) {
 					if (loginService.validateUserOtpVerified(loginRequest.getEmail(), loginRequest.getPassword())) {
 						User user = loginService.findByEmail(loginRequest.getEmail());
-						if (user.getChangePasswordStatus().equalsIgnoreCase("T")) {
+						if (user.getChangePasswordStatus()) {
 							return new ResponseEntity<Object>(
 									new ResponseModel(true, USER_LOGIN_SUCCESS, loginRequest.getEmail(), 0),
 									HttpStatus.OK);

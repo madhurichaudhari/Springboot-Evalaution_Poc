@@ -16,6 +16,9 @@ public class LoginRequestModel {
 	private String isOtpverified;
 	private String otp;
 	private String createdBy;
+	/**
+	 * @return
+	 */
 	public String getCreatedBy() {
 		return createdBy;
 	}

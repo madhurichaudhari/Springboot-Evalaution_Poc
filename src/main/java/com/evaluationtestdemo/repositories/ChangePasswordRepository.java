@@ -36,7 +36,7 @@ public interface ChangePasswordRepository extends JpaRepository<User, Long>{
 	 */
 	@Modifying
 	  @Query("update User u set u.changePasswordStatus = :changePasswordStatus where u.id = :id")
-	  public int updateChangePasswordStatusrById(@Param("changePasswordStatus") String changePasswordStatus, @Param("id") long id);
+	  public int updateChangePasswordStatusrById(@Param("changePasswordStatus") boolean changePasswordStatus, @Param("id") long id);
 	 
 	   /**
 	 * @param id

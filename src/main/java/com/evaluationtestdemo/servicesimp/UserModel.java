@@ -1,60 +1,78 @@
-package com.evaluationtestdemo.entities;
+package com.evaluationtestdemo.servicesimp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.evaluationtestdemo.servicesimp.UserModel;
-
+import com.evaluationtestdemo.entities.User;
 
 /**
  * @author MadhuriC
- * UserEntity for Creating User Table
  *
  */
-@Entity
-@Table(name = "users_tbl")
-public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id")
+public class UserModel {
+
 	private long id;
+
+	/**
+	 * @param id
+	 * @param firstName
+	 * @param last_name
+	 * @param gender
+	 * @param email
+	 * @param mobile
+	 * @param createdBy
+	 * @param changePasswordStatus
+	 * @param password
+	 * @param otp
+	 * @param otpVerifiedStatus
+	 */
+	public UserModel(long id, String firstName, String last_name, String gender, String email, String mobile,
+			String createdBy, boolean changePasswordStatus, String password, String otp, boolean otpVerifiedStatus) {
+		this.id = id;
+		this.firstName = firstName;
+		this.last_name = last_name;
+		this.gender = gender;
+		this.email = email;
+		this.mobile = mobile;
+		this.createdBy = createdBy;
+		this.changePasswordStatus = changePasswordStatus;
+		this.password = password;
+		this.otp = otp;
+		this.otpVerifiedStatus = otpVerifiedStatus;
+
+	}
+
 	@NotBlank(message = "First Name is mandatory")
-	@Column
 	private String firstName;
-	@Column
+
 	private String last_name;
 	@NotBlank(message = "Enter a valid Gender Details")
-	@Column
+
 	private String gender;
 	@Email(message = "Email should be valid")
 	@NotBlank(message = "Email is mandatory")
-	@Column(unique = true)
+
 	private String email;
 	@Size(min = 10, max = 10, message = "Enter the valid phone number")
-	@Column
+
 	private String mobile;
-	@Column
+
 	private String createdBy;
-	@Column
+
 	private boolean changePasswordStatus;
-	@Column
+
 	private String password;
-	@Column
+
 	private String otp;
-	@Column
+
 	private boolean otpVerifiedStatus;
 	
+	private User user;
+
 	/**
 	 * @return isOtpVerified
 	 */
-	
 
 	public boolean getOtpVerifiedStatus() {
 		return otpVerifiedStatus;
@@ -66,8 +84,6 @@ public class User {
 	public void setOtpVerifiedStatus(boolean otpVerifiedStatus) {
 		this.otpVerifiedStatus = otpVerifiedStatus;
 	}
-
-
 
 	/**
 	 * @return
@@ -95,8 +111,8 @@ public class User {
 	 */
 	public void setChangePasswordStatus(boolean changePasswordStatus) {
 		this.changePasswordStatus = changePasswordStatus;
-	}	
-	
+	}
+
 	/**
 	 * @return
 	 */
@@ -128,11 +144,11 @@ public class User {
 	/**
 	 * 
 	 */
-	public User() {
+	public UserModel() {
 		super();
 
 	}
-	
+
 	/**
 	 * @return id
 	 */
@@ -190,16 +206,26 @@ public class User {
 		this.mobile = mobile;
 	}
 	
+
+	
 	/**
-	 * @return UserModel
+	 * @return User
 	 */
-	public UserModel getUserModel() {
-	    return new UserModel(this.id, this.firstName, this.last_name, this.gender,
-	              this.email,this.mobile, this.createdBy,this.changePasswordStatus,
-	              this.password,this.otp, this.otpVerifiedStatus);
+	public User getUser() {
+		if(user == null) {
+		user=new User();
+		user.setId(id);
+		user.setFirstName(firstName);
+		user.setLast_name(last_name);
+		user.setEmail(email);
+		user.setMobile(mobile);
+		user.setCreatedBy(createdBy);
+		user.setPassword(password);
+		user.setGender(gender);
+		user.setOtp(otp);
+		user.setOtpVerifiedStatus(otpVerifiedStatus);
+		user.setChangePasswordStatus(changePasswordStatus);
+		}
+	    return user;
 	}
-
-
-
-
 }

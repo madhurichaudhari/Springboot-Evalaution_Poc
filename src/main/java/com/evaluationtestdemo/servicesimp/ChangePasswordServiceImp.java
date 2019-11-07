@@ -22,23 +22,32 @@ import com.evaluationtestdemo.services.ChangePasswordService;
 @Transactional
 public class ChangePasswordServiceImp implements ChangePasswordService {
 
-	@Autowired(required = false)
+	@Autowired
 	ChangePasswordRepository passwordRepository;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
-	@Autowired(required = false)
+	@Autowired
 	private LoginRepository loginRepo;
 
 	@Override
-	public int updatepassword(String email, String password, PasswordEncoder passwordEncoder) {
+	public int updatepassword(String email, String password) {
 		User userdata = loginRepo.findByEmail(email);
 		return passwordRepository.UpdateUserById(passwordEncoder.encode(password), userdata.getId());
 	}
 
 	@Override
-	public int updatechangePasswordStatusrById(String email, String changePasswordstatus) {
+	public int updatechangePasswordStatusrById(String email, boolean changePasswordstatus) {
 		User userdata = loginRepo.findByEmail(email);
 		return passwordRepository.updateChangePasswordStatusrById(changePasswordstatus, userdata.getId());
 
+	}
+
+	@Override
+	public boolean getMatchPassword(String oldpassword, String password) {
+		boolean passwordStatus=passwordEncoder.matches(oldpassword, password);
+		return passwordStatus;
 	}
 
 }

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.repositories.OtpVerifyRepository;
 import com.evaluationtestdemo.requestmodels.OtpRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
 import com.evaluationtestdemo.servicesimp.LoginServiceImp;
@@ -27,27 +27,26 @@ public class OtpVerifyController  extends AppConstant{
 	
 	/*** Creating bean of LoginServiceImpl */
 	
-	@Autowired(required = false)
+	@Autowired
 	private OtpServiceImp otpService;
 	
 	/*** Creating bean of LoginService */
-	@Autowired(required = false)
+	@Autowired
 	private LoginServiceImp loginService;
 	
-	@Autowired(required = false)
-	private OtpVerifyRepository otpVerifyRepository;
+	
 	
 	/**
 	 * @param otpRequestModel 
 	 * @return ResponseEntity
 	 */
 	@PostMapping("/otpVerify")
-	public ResponseEntity<Object> getVerifyOtp(@Valid @RequestBody OtpRequestModel otpRequestModel) {
+	public ResponseEntity<Object> verifyOtp(@Valid @RequestBody OtpRequestModel otpRequestModel) {
 		try {
 			User otpDetails = loginService.findByEmail(otpRequestModel.getEmail());
 			if (otpDetails.getOtp().equalsIgnoreCase(otpRequestModel.getOtp())) {
-				otpDetails.setIs_otp_verified("T");
-		        otpService.otpVerified(otpVerifyRepository,otpDetails.getIs_otp_verified(), otpDetails.getId());
+				otpDetails.setOtpVerifiedStatus(true);
+		        otpService.otpVerified(true, otpDetails.getId());
 				return new ResponseEntity<Object>(new ResponseModel(true, OTP_VERIFIED, otpDetails.getEmail(), 0),
 						HttpStatus.OK);
 			} else {

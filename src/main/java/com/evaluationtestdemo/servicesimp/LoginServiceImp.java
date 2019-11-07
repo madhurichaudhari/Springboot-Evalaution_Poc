@@ -18,13 +18,9 @@ import com.evaluationtestdemo.services.LoginService;
 @Transactional
 public class LoginServiceImp implements LoginService {
 
-	@Autowired(required = false)
+	@Autowired
 	private LoginRepository loginRepository;
-	
-
-	
-	
-	@Autowired(required = false)
+	@Autowired
 	PasswordEncoder passwordEncoder;
 
 	@Override
@@ -52,7 +48,11 @@ public class LoginServiceImp implements LoginService {
 	@Override
 	public boolean validateUserOtpVerified(String emailAddress, String password) {
 		User user = loginRepository.findByEmail(emailAddress);
-		boolean otpStatus = user.getIs_otp_verified().equalsIgnoreCase("T") ? true : false;
+		boolean otpStatus;
+		if (user.getOtpVerifiedStatus()) 
+			otpStatus=true;
+         else 
+        	 otpStatus=false;
 		return otpStatus;
 	}
 

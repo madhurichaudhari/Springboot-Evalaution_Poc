@@ -39,10 +39,10 @@ public class LoginServiceTest {
 		
 	  }
 	/**
-	 * call function for testing User has not been logged successfully
+	 * Testing User/Admin has been logged successfully
 	 */
 	@Test
-	public void testUserLoginSuccess() {
+	public void testUserLoginWhenSuccess() {
 		LoginRequestModel loginRequestModel = new LoginRequestModel();
 		loginRequestModel.setEmail("Ranjeet@gmail.com");
 		loginRequestModel.setPassword("ranjeet");
@@ -51,17 +51,18 @@ public class LoginServiceTest {
 		assertEquals(true, loginSatus);
 	}
 
+	
 	/**
-	 * call function for testing Admin has not been logged successfully
+	 * 
 	 */
 	@Test
-	public void testAdminLoginSuccess() {
+	public void testAdminLoginWhenFail() {
 		LoginRequestModel loginRequestModel = new LoginRequestModel();
 		loginRequestModel.setEmail("madhurichaudhari905@@gmail.com");
 		loginRequestModel.setPassword("madhuri");
-		Mockito.when(loginRepo.existsByEmail(loginRequestModel.getEmail())).thenReturn(true);
+		Mockito.when(loginRepo.existsByEmail(loginRequestModel.getEmail())).thenReturn(false);
 		boolean loginSatus = loginServiceimp.validateUserEmail(loginRequestModel.getEmail());
-		assertEquals(true, loginSatus);
+		assertEquals(false, loginSatus);
 	}
 
 }

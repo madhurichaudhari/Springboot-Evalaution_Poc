@@ -27,6 +27,9 @@ public class EvaluationTestDemoApplication {
 		SpringApplication.run(EvaluationTestDemoApplication.class, args);
 	}
 
+	/**
+	 * @return
+	 */
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).apiInfo(AppConstant.DEFAULT_API_INFO)

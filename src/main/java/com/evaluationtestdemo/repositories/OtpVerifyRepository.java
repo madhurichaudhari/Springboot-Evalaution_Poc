@@ -23,8 +23,8 @@ public interface OtpVerifyRepository extends JpaRepository<User, Long>{
 	 * @return
 	 */
 	  @Modifying
-	  @Query("update User u set u.isOtpVerified = :isOtpVerified where u.id = :id")
-	  public int updateisOtpVerifiedById(@Param("isOtpVerified") String isOtpVerified, @Param("id") long id);
+	  @Query("update User u set u.otpVerifiedStatus = :otpVerifiedStatus where u.id = :id")
+	  public int updateisOtpVerifiedById(@Param("otpVerifiedStatus") boolean isOtpVerified, @Param("id") long id);
 	  
 	
 	
