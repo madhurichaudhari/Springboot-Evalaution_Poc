@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.evaluationtestdemo.entities.User;
+import com.evaluationtestdemo.iServices.IChangePasswordService;
 import com.evaluationtestdemo.repositories.ChangePasswordRepository;
 import com.evaluationtestdemo.repositories.LoginRepository;
-import com.evaluationtestdemo.services.ChangePasswordService;
 
 /*
  *  PasswordServiceImpl for implementing response for PasswordService 
@@ -20,7 +20,7 @@ import com.evaluationtestdemo.services.ChangePasswordService;
  */
 @Service
 @Transactional
-public class ChangePasswordServiceImp implements ChangePasswordService {
+public class ChangePasswordServiceImp implements IChangePasswordService {
 
 	@Autowired
 	ChangePasswordRepository passwordRepository;

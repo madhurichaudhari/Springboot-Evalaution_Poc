@@ -18,7 +18,7 @@ import com.evaluationtestdemo.servicesimp.OtpServiceImp;
 import com.evaluationtestdemo.utils.AppConstant;
 
 /**
- * @author MadhuriC
+ * OtpVerifyController for User can verify OTP  and extending AppConstant for declare Message related response.
  *
  */
 @RestController

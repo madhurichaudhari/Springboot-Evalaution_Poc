@@ -1,4 +1,4 @@
-package com.evaluationtestdemo.services;
+package com.evaluationtestdemo.iServices;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import com.evaluationtestdemo.servicesimp.UserModel;
  */
 @Service
 @Transactional
-public interface UserRegisterationService {
+public interface IUserRegisterationService {
 	/**
 	
 	 * @param userModel

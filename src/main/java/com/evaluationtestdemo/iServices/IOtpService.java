@@ -1,10 +1,10 @@
-package com.evaluationtestdemo.services;
+package com.evaluationtestdemo.iServices;
 
 /**
  * @author MadhuriC
  *
  */
-public interface OtpService {
+public interface IOtpService {
 
 	/**
 	 * @param isOtpStatus

@@ -1,4 +1,4 @@
-package com.evaluationtestdemo.services;
+package com.evaluationtestdemo.iServices;
 
 import com.evaluationtestdemo.entities.User;
 
@@ -7,7 +7,7 @@ import com.evaluationtestdemo.entities.User;
  * @author MadhuriC
  *
  */
-public interface LoginService {
+public interface ILoginService {
 	/**
 	 * @param emailAddress
 	 * @param password

@@ -25,6 +25,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		        auth.inMemoryAuthentication().withUser("bill").password("abc123").roles("USER");
+		        auth.inMemoryAuthentication().withUser("admin@hcl.com").password("root123").roles("ADMIN");
+		    
 		}
 
 	/**
@@ -37,9 +40,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		// We don't need CSRF for this example
-		httpSecurity.authorizeRequests().antMatchers("/").permitAll().and().authorizeRequests()
-				.antMatchers("/console/**").permitAll();
-		httpSecurity.csrf().disable();
+		      httpSecurity.authorizeRequests()
+		      //.antMatchers("/").access("hasRole('USER') or hasRole('ADMIN')")
+		      //.antMatchers("/admin/**").hasRole("ADMIN")
+		       .antMatchers("/console/**").permitAll()
+		        .and().formLogin().loginPage("/login")
+		        .and().exceptionHandling().accessDeniedPage("/Access_Denied");
+		      httpSecurity.csrf().disable();
 		httpSecurity.headers().frameOptions().disable();
 	}
 }
+
+
+
+
+	
+

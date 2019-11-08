@@ -11,7 +11,7 @@ import com.evaluationtestdemo.entities.User;
 
 /**
  * @author MadhuriC
- * JpaRepository for creating LoginRepository
+ * JpaRepository for creating OtpVerifyRepository
  *
  */
 @Repository

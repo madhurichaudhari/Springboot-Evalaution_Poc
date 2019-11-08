@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.evaluationtestdemo.entities.User;
+import com.evaluationtestdemo.iServices.IChangePasswordService;
+import com.evaluationtestdemo.iServices.ILoginService;
 import com.evaluationtestdemo.requestmodels.ChangePasswordRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
-import com.evaluationtestdemo.services.ChangePasswordService;
-import com.evaluationtestdemo.services.LoginService;
 import com.evaluationtestdemo.utils.AppConstant;
 
 
 
 /**
- * @author MadhuriC
+ * ChangePasswordController for User can  change Password.
  *
  */
 @RestController
@@ -27,22 +27,23 @@ public class ChangePasswordController {
 	
 	/*** Creating bean of PasswordService */
 	@Autowired
-	ChangePasswordService passwordService;
+	IChangePasswordService passwordService;
 	/*** Creating bean of PasswordRepository */
 	
 
 	
 	@Autowired
-	private LoginService loginService;
+	private ILoginService loginService;
 	
 	/**
 	 * @param changepassword
-	 * @return
+	 * @return ResponseEntity<Object>
 	 */
 	@PostMapping("/changePassword")
 	public ResponseEntity<Object> changePassword(@RequestBody ChangePasswordRequestModel changepassword) {
 		if (changepassword.getNewpassword().equals(changepassword.getConfirmpassword())) {
 			User userdata = loginService.findByEmail(changepassword.getEmail());
+			
 			if (userdata != null) {
 				if (passwordService.getMatchPassword(changepassword.getOldpassword(), userdata.getPassword())) {
 				

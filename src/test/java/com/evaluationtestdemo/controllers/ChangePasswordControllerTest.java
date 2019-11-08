@@ -14,11 +14,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.evaluationtestdemo.entities.User;
+import com.evaluationtestdemo.iServices.IChangePasswordService;
+import com.evaluationtestdemo.iServices.ILoginService;
 import com.evaluationtestdemo.repositories.ChangePasswordRepository;
 import com.evaluationtestdemo.repositories.LoginRepository;
 import com.evaluationtestdemo.requestmodels.ChangePasswordRequestModel;
-import com.evaluationtestdemo.services.ChangePasswordService;
-import com.evaluationtestdemo.services.LoginService;
+import com.evaluationtestdemo.servicesimp.UserModel;
 import com.evaluationtestdemo.utils.JunitUtils;
 
 /**
@@ -32,10 +33,10 @@ class ChangePasswordControllerTest extends JunitUtils {
 	ChangePasswordRepository passwordRepository;
 	
 	@Mock
-	LoginService loginService;
+	ILoginService loginService;
 	
 	@Mock
-	ChangePasswordService passwordService;
+	IChangePasswordService passwordService;
 
 	
 	@BeforeEach
@@ -44,7 +45,7 @@ class ChangePasswordControllerTest extends JunitUtils {
 	}
 
 	@Test
-	void testChangePasswordWhenSuccess() {
+	void testChangePassword() {
 		String uri = "/user/changePassword";
 			ChangePasswordRequestModel changePassword=new ChangePasswordRequestModel();
 			changePassword.setNewpassword("admin");
@@ -52,11 +53,13 @@ class ChangePasswordControllerTest extends JunitUtils {
 			changePassword.setOldpassword("user");
 			changePassword.setChangePasswordStatus(true);
 			changePassword.setEmail("madhuric@hcl.com");
-			User user = new User();
+			changePassword.setUserid("1");
+			UserModel user = new UserModel();
 			user.setEmail("madhuric@gmail.com");
 			user.setPassword("user");
 			user.setId(1);
-			Mockito.when(loginService.findByEmail(changePassword.getEmail())).thenReturn(user);
+			
+			Mockito.when(loginService.findByEmail(changePassword.getEmail())).thenReturn(user.getUser());
 			Mockito.when(passwordService.getMatchPassword(changePassword.getOldpassword(), user.getPassword())).thenReturn(true);
 			Mockito.when(passwordService.updatepassword((user.getEmail()),changePassword.getConfirmpassword())).thenReturn(1);
 			Mockito.when(passwordService.updatechangePasswordStatusrById(user.getEmail(),user.getChangePasswordStatus())).thenReturn(1);

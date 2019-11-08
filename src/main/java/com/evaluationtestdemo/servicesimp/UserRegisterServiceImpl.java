@@ -2,14 +2,12 @@
 package com.evaluationtestdemo.servicesimp;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.evaluationtestdemo.entities.User;
+import com.evaluationtestdemo.iServices.IUserRegisterationService;
 import com.evaluationtestdemo.repositories.UserRegisterationRepository;
-import com.evaluationtestdemo.services.UserRegisterationService;
-import com.evaluationtestdemo.utils.EmailUtil;
 import com.evaluationtestdemo.utils.MiscUtil;
 
 
@@ -21,7 +19,7 @@ import com.evaluationtestdemo.utils.MiscUtil;
  */
 @Service
 @Transactional
-public class UserServiceImpl implements UserRegisterationService {
+public class UserRegisterServiceImpl implements IUserRegisterationService {
 
 	@Autowired
 	UserRegisterationRepository userRepo;
@@ -33,10 +31,6 @@ public class UserServiceImpl implements UserRegisterationService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
-
-
-	
-
 	@Override
 	public User addUser(UserModel userModel) {
 		userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));

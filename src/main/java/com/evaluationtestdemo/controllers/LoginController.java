@@ -17,7 +17,8 @@ import com.evaluationtestdemo.servicesimp.LoginServiceImp;
 import com.evaluationtestdemo.utils.AppConstant;
 
 /**
- * @author MadhuriC UesrController for User Login
+ * @author MadhuriC
+ *  UesrController for User can  Login and extending AppConstant for declare Message related response
  *
  */
 @RestController
@@ -35,7 +36,6 @@ public class LoginController extends AppConstant {
 	 */
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@Valid @RequestBody LoginRequestModel loginRequest) {
-		try {
 			if (loginService.validateUserEmail(loginRequest.getEmail())) {
 				if (!loginRequest.getPassword().equalsIgnoreCase("")
 						&& loginService.validateUserPassword(loginRequest.getPassword(), loginRequest.getEmail())) {
@@ -71,9 +71,6 @@ public class LoginController extends AppConstant {
 						HttpStatus.OK);
 			}
 
-		} catch (Exception e) {
-			return new ResponseEntity<Object>(new ResponseModel(false, e.getMessage(), null, 0),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		
 	}
 }

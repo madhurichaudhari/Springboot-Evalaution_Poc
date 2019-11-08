@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 /**
  * @author MadhuriC
  *
- * LoginRequestModel for send request for Login 
+ * OtpRequestModel for send request for OTP 
  */
 public class OtpRequestModel {
 	@NotBlank(message = "Email is mandatory")

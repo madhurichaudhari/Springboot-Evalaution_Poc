@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.evaluationtestdemo.entities.User;
 import com.evaluationtestdemo.repositories.UserRegisterationRepository;
 import com.evaluationtestdemo.servicesimp.UserModel;
-import com.evaluationtestdemo.servicesimp.UserServiceImpl;
+import com.evaluationtestdemo.servicesimp.UserRegisterServiceImpl;
 
 /**
  * @author MadhuriC
@@ -30,7 +30,7 @@ public class UserRegisterServiceTest {
 	UserRegisterationRepository userRep;
 	
 	@InjectMocks
-	UserServiceImpl userServiceImp;
+	UserRegisterServiceImpl userServiceImp;
 	
 	@Mock
 	PasswordEncoder passwordEncoder;

@@ -1,7 +1,6 @@
 package com.evaluationtestdemo;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
@@ -13,10 +12,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @author MadhuriC
- *
+ *EvaluationTestDemoApplication for Start Application
  */
 @SpringBootApplication
-@EnableAutoConfiguration
 @EnableSwagger2
 public class EvaluationTestDemoApplication {
 
@@ -28,7 +26,8 @@ public class EvaluationTestDemoApplication {
 	}
 
 	/**
-	 * @return
+	 * This is defined for Swagger implementation
+	 * @return Docket
 	 */
 	@Bean
 	public Docket api() {

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.evaluationtestdemo.iServices.IOtpService;
 import com.evaluationtestdemo.repositories.OtpVerifyRepository;
-import com.evaluationtestdemo.services.OtpService;
 
 /*
  *  PasswordServiceImpl for implementing response for PasswordService 
@@ -17,7 +17,7 @@ import com.evaluationtestdemo.services.OtpService;
  */
 @Service
 @Transactional
-public class OtpServiceImp implements OtpService {
+public class OtpServiceImp implements IOtpService {
 	
 	@Autowired
 	OtpVerifyRepository otpVerifyRepository;

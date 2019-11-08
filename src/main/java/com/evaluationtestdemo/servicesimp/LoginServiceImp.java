@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.evaluationtestdemo.entities.User;
+import com.evaluationtestdemo.iServices.ILoginService;
 import com.evaluationtestdemo.repositories.LoginRepository;
-import com.evaluationtestdemo.services.LoginService;
 
 /**
  * @author MadhuriC LoginServiceImpl for implementing response for LoginService
@@ -16,7 +16,7 @@ import com.evaluationtestdemo.services.LoginService;
  */
 @Service
 @Transactional
-public class LoginServiceImp implements LoginService {
+public class LoginServiceImp implements ILoginService {
 
 	@Autowired
 	private LoginRepository loginRepository;

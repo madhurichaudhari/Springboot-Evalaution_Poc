@@ -14,7 +14,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.evaluationtestdemo.services.UserRegisterationService;
+import com.evaluationtestdemo.iServices.IUserRegisterationService;
 import com.evaluationtestdemo.servicesimp.UserModel;
 import com.evaluationtestdemo.utils.EmailUtil;
 import com.evaluationtestdemo.utils.JunitUtils;
@@ -31,7 +31,7 @@ class UserRegisterControllerTest extends JunitUtils {
 	 * @InjectMocks UserServiceImpl userRegImp;
 	 */
 	@Mock
-	UserRegisterationService userService;
+	IUserRegisterationService userService;
 	
 	@Mock
 	EmailUtil emailUtil;
@@ -63,10 +63,9 @@ class UserRegisterControllerTest extends JunitUtils {
 		userModel.setCreatedBy("user");
 		userModel.setGender("female");
 		userModel.setOtp("1244");
+		
 		Mockito.when(userService.checkUserEmailAndPhone(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
 				.thenReturn(null);
-		Mockito.when(userService.createRandomOtp()).thenReturn("3456");
-		Mockito.doNothing().when(emailUtil).sendEmail(javaMailSender,userModel.getEmail(), "Verify Otp for signup", "Otp is 1244"); 
 		Mockito.when(userService.addUser(userModel)).thenReturn(userModel.getUser());
 		try {
 			String inputJson = super.mapToJson(userModel);

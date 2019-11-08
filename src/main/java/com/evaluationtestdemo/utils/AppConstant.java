@@ -57,6 +57,8 @@ public class AppConstant {
 	public static final String BAD_REQUEST = "Bad request.";
 	public static final String SUCCESS = "Success";
 	public static final String FAIL = "Failure";
+	
+	public static final String ADMIN_FAIL = "You are not Admin";
 	public static final String SUCCESSFULLY_PWD_SEND = "Password send to your email.";
 	public static final String EMAIL_NOT_EXIST = "Email not exist.";
 	public static final String SUCCESSFULLY_PWD_CHANGED = "Password changed succesfully";

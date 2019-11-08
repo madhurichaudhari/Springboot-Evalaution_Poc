@@ -15,7 +15,7 @@ import com.evaluationtestdemo.servicesimp.UserModel;
 
 /**
  * @author MadhuriC
- * UserEntity for Creating User Table
+ * UserEntity for Creating User Entity
  *
  */
 @Entity

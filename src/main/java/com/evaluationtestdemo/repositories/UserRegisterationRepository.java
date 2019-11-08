@@ -8,7 +8,7 @@ import com.evaluationtestdemo.entities.User;
 
 /**
  * @author MadhuriC
- *JpaRepository for creating UserRepository
+ *JpaRepository for creating UserRegisterationRepository
  */
 @Repository
 public interface UserRegisterationRepository  extends JpaRepository<User, Long> {

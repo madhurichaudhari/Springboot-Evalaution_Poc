@@ -12,7 +12,7 @@ import com.evaluationtestdemo.entities.User;
 
 /**
  * @author MadhuriC
- * JpaRepository for creating PasswordRepository
+ * JpaRepository for creating ChangePasswordRepository
  *
  */
 @Repository

@@ -1,4 +1,4 @@
-package com.evaluationtestdemo.services;
+package com.evaluationtestdemo.iServices;
 
 /*
  *  for creating PasswordService for 
@@ -8,7 +8,7 @@ package com.evaluationtestdemo.services;
  * @author MadhuriC
  *
  */
-public interface ChangePasswordService {
+public interface IChangePasswordService {
 
 	/**
 	 * @param email

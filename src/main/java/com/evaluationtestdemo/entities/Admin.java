@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 
 /**
  * @author MadhuriC
- * AdminEntity for Creating Admin Table
+ * AdminEntity for Creating Admin Entity
  *
  */
 @Entity
@@ -44,10 +44,45 @@ public class Admin {
 	@Size(min = 10, max = 10, message = "Enter the valid phone number")
 	@Column
 	private String mobile;
-
+	
+	@Column
+	private String createdBy;
+	
+	@Column
+	private boolean changePasswordStatus;
+	@Column
+	private String password;
 
 	
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public boolean isChangePasswordStatus() {
+		return changePasswordStatus;
+	}
+
+	public void setChangePasswordStatus(boolean changePasswordStatus) {
+		this.changePasswordStatus = changePasswordStatus;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	
+
+	/**
+	 * creating constructor
+	 */
 	public Admin() {
 		super();
 

@@ -16,8 +16,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.evaluationtestdemo.entities.User;
+import com.evaluationtestdemo.iServices.ILoginService;
 import com.evaluationtestdemo.requestmodels.LoginRequestModel;
-import com.evaluationtestdemo.services.LoginService;
 import com.evaluationtestdemo.servicesimp.LoginServiceImp;
 import com.evaluationtestdemo.utils.JunitUtils;
 
@@ -28,7 +28,7 @@ import com.evaluationtestdemo.utils.JunitUtils;
 class LoginControllerTest extends JunitUtils{
 	
 	@Mock
-	private LoginService loginService;
+	private ILoginService loginService;
 
 	@Before
 	public void setUp() {
@@ -57,10 +57,8 @@ class LoginControllerTest extends JunitUtils{
 					content(inputJson))
 					.andReturn();
 			int status = mvcResult.getResponse().getStatus();
-			mvcResult.getResponse().getStatus();
 			assertEquals(200, status);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		}
