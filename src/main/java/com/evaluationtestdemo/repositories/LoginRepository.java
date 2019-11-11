@@ -18,11 +18,10 @@ public interface LoginRepository extends JpaRepository<User, Long>{
     /**
      * @param email
      * @param password
-     * @param otpVerifiedStatus 
    
      * @return
      */
-    boolean existsByEmailAndPasswordAndOtpVerifiedStatus(String email,String password,boolean otpVerifiedStatus);
+    boolean existsByEmailAndPassword(String email,String password);
     /**
      * @param email
      * @return

@@ -12,14 +12,12 @@ import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import com.evaluationtestdemo.entities.User;
 import com.evaluationtestdemo.iServices.IChangePasswordService;
 import com.evaluationtestdemo.iServices.ILoginService;
 import com.evaluationtestdemo.repositories.ChangePasswordRepository;
 import com.evaluationtestdemo.repositories.LoginRepository;
 import com.evaluationtestdemo.requestmodels.ChangePasswordRequestModel;
-import com.evaluationtestdemo.servicesimp.UserModel;
+import com.evaluationtestdemo.requestmodels.UserRequestModel;
 import com.evaluationtestdemo.utils.JunitUtils;
 
 /**
@@ -54,7 +52,7 @@ class ChangePasswordControllerTest extends JunitUtils {
 			changePassword.setChangePasswordStatus(true);
 			changePassword.setEmail("madhuric@hcl.com");
 			changePassword.setUserid("1");
-			UserModel user = new UserModel();
+			UserRequestModel user = new UserRequestModel();
 			user.setEmail("madhuric@gmail.com");
 			user.setPassword("user");
 			user.setId(1);

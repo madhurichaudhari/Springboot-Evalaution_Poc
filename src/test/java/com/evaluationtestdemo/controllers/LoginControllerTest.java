@@ -7,10 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -18,7 +16,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.evaluationtestdemo.entities.User;
 import com.evaluationtestdemo.iServices.ILoginService;
 import com.evaluationtestdemo.requestmodels.LoginRequestModel;
-import com.evaluationtestdemo.servicesimp.LoginServiceImp;
 import com.evaluationtestdemo.utils.JunitUtils;
 
 /**
@@ -47,7 +44,6 @@ class LoginControllerTest extends JunitUtils{
 			user.setEmail(loginRequestModel.getEmail());
 			user.setPassword(loginRequestModel.getPassword());
 			Mockito.when(loginService.validateUserEmail(loginRequestModel.getEmail())).thenReturn(true);
-			Mockito.when(loginService.validateUserOtpVerified(loginRequestModel.getEmail(), loginRequestModel.getPassword())).thenReturn(true);
 			Mockito.when(loginService.findByEmail(loginRequestModel.getEmail())).thenReturn(user);
 		try {
 			String inputJson = super.mapToJson(loginRequestModel);

@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.evaluationtestdemo.entities.User;
 import com.evaluationtestdemo.repositories.ChangePasswordRepository;
 import com.evaluationtestdemo.repositories.LoginRepository;
-import com.evaluationtestdemo.repositories.OtpVerifyRepository;
 import com.evaluationtestdemo.servicesimp.ChangePasswordServiceImp;
 import com.evaluationtestdemo.servicesimp.LoginServiceImp;
 
@@ -31,8 +30,7 @@ public class ChangePasswordServiceTest {
 	ChangePasswordRepository passwordRepository;
 	@Mock
 	LoginRepository loginRepository;
-	@Mock
-	OtpVerifyRepository otpRepo;
+	
 	@Mock
 	PasswordEncoder passwordEncoder;
 	@InjectMocks

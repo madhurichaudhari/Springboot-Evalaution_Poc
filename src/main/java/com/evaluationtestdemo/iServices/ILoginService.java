@@ -14,11 +14,7 @@ public interface ILoginService {
 	 * @param isOtpVerified
 	 * @return
 	 */
-	public boolean validateUserOtpVerified(String emailAddress, String password);
-	/**
-	 * @param emailAddress
-	 * @return
-	 */
+
 	public boolean validateUserEmail(String emailAddress);
 	/**
 	 * @param password
@@ -36,7 +32,7 @@ public interface ILoginService {
 	 * @param email
 	 * @param password
 	 * @param is_otp_verified
-	 * @return
+	 * @return User
 	 */
 	User findByEmailandPassword(String email, String password,String is_otp_verified);
 	

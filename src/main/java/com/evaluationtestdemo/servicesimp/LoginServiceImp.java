@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.evaluationdemo.validator.UserNotFoundException;
 import com.evaluationtestdemo.entities.User;
 import com.evaluationtestdemo.iServices.ILoginService;
 import com.evaluationtestdemo.repositories.LoginRepository;
@@ -36,7 +37,14 @@ public class LoginServiceImp implements ILoginService {
 
 	@Override
 	public User findByEmail(String email) {
-		return loginRepository.findByEmail(email);
+		User user = loginRepository.findByEmail(email);
+		if (user != null) {
+			return user;
+		} else {
+			new UserNotFoundException(" User  Not Saved");
+
+		}
+		return user;
 	}
 
 	@Override
@@ -44,18 +52,5 @@ public class LoginServiceImp implements ILoginService {
 		User user = loginRepository.findByEmail(email);
 		return passwordEncoder.matches(password, user.getPassword());
 	}
-
-	@Override
-	public boolean validateUserOtpVerified(String emailAddress, String password) {
-		User user = loginRepository.findByEmail(emailAddress);
-		boolean otpStatus;
-		if (user.getOtpVerifiedStatus()) 
-			otpStatus=true;
-         else 
-        	 otpStatus=false;
-		return otpStatus;
-	}
-
-
 
 }

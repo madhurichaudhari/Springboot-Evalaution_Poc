@@ -1,10 +1,8 @@
 package com.evaluationtestdemo.iServices;
 import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
-
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.servicesimp.UserModel;
+import com.evaluationtestdemo.requestmodels.UserRequestModel;
 
 
 
@@ -20,7 +18,7 @@ public interface IUserRegisterationService {
 	 * @param userModel
 	 * @return User
 	 */
-	public User addUser(UserModel userModel);
+	public User addUser(UserRequestModel userModel);
 	/**
 	 * @param mobile
 	 * @param email
@@ -28,9 +26,11 @@ public interface IUserRegisterationService {
 	 * @return User
 	 */
 	public User checkUserEmailAndPhone(String mobile, String email, String userType);
-	
 	/**
-	 * @return
+	 * @param firstName
+	 * @return User
 	 */
-	public String createRandomOtp();
+	public User findByUsername(String firstName);
+	
+
 }

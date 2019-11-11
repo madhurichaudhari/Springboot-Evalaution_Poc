@@ -10,53 +10,53 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.evaluationdemo.validator.UserValidator;
 import com.evaluationtestdemo.entities.User;
 import com.evaluationtestdemo.iServices.IUserRegisterationService;
+import com.evaluationtestdemo.requestmodels.UserRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
-import com.evaluationtestdemo.servicesimp.UserModel;
 import com.evaluationtestdemo.utils.AppConstant;
 
 /**
- * UserRegistrationController for User can  Register and extending AppConstant for declare Message related response
+ * * @author MadhuriC Created UserRegisterController through User can register.
+ * and extending AppConstant for declare Message related response
  *
  */
 
 @RestController
 @RequestMapping(path = "/user")
 public class UserRegisterController extends AppConstant {
-	
+
 	/*** Creating bean of userRegisterService */
-	@Autowired(required=false)
-	IUserRegisterationService userRegisterService;
-	/*
-	 * @Autowired EmailUtil emailUtil;
-	 * 
-	 * @Autowired private JavaMailSender javaMailSender;
-	 */
-	
+	@Autowired(required = false)
+	IUserRegisterationService iUserRegisterService;
+
+	@Autowired(required = false)
+	private UserValidator userValidator;
 
 	/**
+	 * Using this function User can register and take input UserRequestModel type
+	 * 
 	 * @param userModel
 	 * @return ResponseEntity
 	 */
 	@PostMapping("/signup")
-	public ResponseEntity<Object> registerUser(@Valid @RequestBody UserModel userModel) {
-				User mUser = userRegisterService.checkUserEmailAndPhone(userModel.getMobile(), userModel.getEmail(), userModel.getCreatedBy());
-				if (mUser != null) {
-					return new ResponseEntity<Object>(new ResponseModel(false, USER_EMAIL_MOBILE_EXIST, null, 50),
-							HttpStatus.INTERNAL_SERVER_ERROR);
-				} else {
-				boolean isAdmin = userModel.getCreatedBy().equalsIgnoreCase("admin");
-					User user;
-					if (isAdmin) {
-						user= userRegisterService.addUser(userModel);
-					} else if(!isAdmin) {
-						user= userRegisterService.addUser(userModel);
-	                }
-						return new ResponseEntity<Object>(
-								new ResponseModel(true, FAIL, null, 0),
-								HttpStatus.CREATED);
-				}
-				}
+	public ResponseEntity<Object> registerUser(@Valid @RequestBody UserRequestModel userModel) {
+		User mUser = iUserRegisterService.checkUserEmailAndPhone(userModel.getMobile(), userModel.getEmail(),
+				userModel.getCreatedBy());
+		if (mUser != null) {
+			return new ResponseEntity<Object>(new ResponseModel(false, USER_EMAIL_MOBILE_EXIST, null, 50),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		} else {
+			boolean isAdmin = userModel.getCreatedBy().equalsIgnoreCase("admin");
+			User user;
+			if (isAdmin) {
+				user = iUserRegisterService.addUser(userModel);
+			} else if (!isAdmin) {
+				user = iUserRegisterService.addUser(userModel);
+			}
+			return new ResponseEntity<Object>(new ResponseModel(true, SUCCESS, userModel.getUser().getId(), 0),
+					HttpStatus.CREATED);
+		}
 	}
-	
+}

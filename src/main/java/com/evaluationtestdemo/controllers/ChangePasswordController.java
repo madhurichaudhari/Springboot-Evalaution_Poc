@@ -15,27 +15,25 @@ import com.evaluationtestdemo.requestmodels.ChangePasswordRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
 import com.evaluationtestdemo.utils.AppConstant;
 
-
-
 /**
- * ChangePasswordController for User can  change Password.
- *
+ * * @author MadhuriC Created ChangePasswordController through User can change
+ * Password.
  */
 @RestController
 @RequestMapping(path = "/user")
 public class ChangePasswordController {
-	
-	/*** Creating bean of PasswordService */
-	@Autowired
-	IChangePasswordService passwordService;
-	/*** Creating bean of PasswordRepository */
-	
 
-	
-	@Autowired
+	/*** Creating bean of PasswordService */
+	@Autowired(required = false)
+	IChangePasswordService changePasswordService;
+	/*** Creating bean of PasswordRepository */
+	@Autowired(required = false)
 	private ILoginService loginService;
-	
+
 	/**
+	 * Using this function User can change the password and take input
+	 * ChangePasswordRequestModel type
+	 * 
 	 * @param changepassword
 	 * @return ResponseEntity<Object>
 	 */
@@ -43,24 +41,24 @@ public class ChangePasswordController {
 	public ResponseEntity<Object> changePassword(@RequestBody ChangePasswordRequestModel changepassword) {
 		if (changepassword.getNewpassword().equals(changepassword.getConfirmpassword())) {
 			User userdata = loginService.findByEmail(changepassword.getEmail());
-			
+
 			if (userdata != null) {
-				if (passwordService.getMatchPassword(changepassword.getOldpassword(), userdata.getPassword())) {
-				
-					int passwordStatus = passwordService.updatepassword((userdata.getEmail()),
+				if (changePasswordService.getMatchPassword(changepassword.getOldpassword(), userdata.getPassword())) {
+
+					int passwordStatus = changePasswordService.updatepassword((userdata.getEmail()),
 							changepassword.getConfirmpassword());
-					if(passwordStatus==1) {
-					userdata.setChangePasswordStatus(true);
-					passwordService.updatechangePasswordStatusrById(userdata.getEmail(),userdata.getChangePasswordStatus());
-					return new ResponseEntity<Object>(
-							new ResponseModel(true, AppConstant.SUCCESSFULLY_PWD_CHANGED, userdata.getEmail(), passwordStatus), HttpStatus.OK);
+					if (passwordStatus == 1) {
+						userdata.setChangePasswordStatus(true);
+						changePasswordService.updatechangePasswordStatusrById(userdata.getEmail(),
+								userdata.getChangePasswordStatus());
+						return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.SUCCESSFULLY_PWD_CHANGED,
+								userdata.getEmail(), passwordStatus), HttpStatus.OK);
+					} else {
+						return new ResponseEntity<Object>(new ResponseModel(true,
+								AppConstant.SUCCESSFULLY_PWD_NOT_CHANGED, userdata.getEmail(), passwordStatus),
+								HttpStatus.INTERNAL_SERVER_ERROR);
 					}
-					else {
-						return new ResponseEntity<Object>(
-								new ResponseModel(true, AppConstant.SUCCESSFULLY_PWD_NOT_CHANGED, userdata.getEmail(), passwordStatus),HttpStatus.INTERNAL_SERVER_ERROR );
-					}
-				} 
-				else {
+				} else {
 					return new ResponseEntity<Object>(new ResponseModel(false, AppConstant.PWD_MATCHED_FAILED, null, 0),
 							HttpStatus.INTERNAL_SERVER_ERROR);
 				}

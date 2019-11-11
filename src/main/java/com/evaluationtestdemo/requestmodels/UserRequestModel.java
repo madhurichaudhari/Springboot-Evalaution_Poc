@@ -1,79 +1,75 @@
-package com.evaluationtestdemo.entities;
+package com.evaluationtestdemo.requestmodels;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
-import com.evaluationtestdemo.requestmodels.UserRequestModel;
+import com.evaluationtestdemo.entities.User;
 
 /**
- * @author MadhuriC UserEntity for Creating User Entity
+ * @author MadhuriC
  *
  */
-@Entity
-@Table(name = "users_tbl")
-public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id")
+public class UserRequestModel {
+
 	private long id;
-	@Column
+	@NotBlank(message = "First Name is mandatory")
 	private String userName;
-	@Column
+	@NotBlank(message = "Enter a valid Gender Details")
 	private String gender;
-	@Column(name = "email", nullable = false, unique = true)
+	@Email(message = "Please provide a valid e-mail")
+	@NotEmpty(message = "Please provide an e-mail")
 	private String email;
-	@Column
+	@Size(min = 10, max = 10, message = "Enter the valid phone number")
 	private String mobile;
-	@Column
 	private String createdBy;
-	@Column
 	private boolean changePasswordStatus;
-	@Column
 	private String password;
-	@Column
 	private String confirmPassword;
-	
-	
-	
 
-
-
-
-
-
-	/**
-	 * @param user
-	 */
-	public User(User user) {
-		userName=user.userName;
-		gender=user.gender;
-		mobile=user.mobile;
-		createdBy=user.createdBy;
-		password=user.password;
-		confirmPassword=user.confirmPassword;
-		changePasswordStatus=user.changePasswordStatus;		
-	}
-	
-	
-	
 	/**
 	 * @return confirmPassword
 	 */
 	public String getConfirmPassword() {
 		return confirmPassword;
 	}
+
 	/**
 	 * @param confirmPassword
 	 */
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
-	
 
+	private User user;
+
+	/**
+	 * @param id
+	 * @param userName
+	 * @param gender
+	 * @param email
+	 * @param mobile
+	 * @param createdBy
+	 * @param changePasswordStatus
+	 * @param password
+	 * @param confirmPassword
+	 * @param otp
+	 * @param otpVerifiedStatus
+	 */
+	public UserRequestModel(long id, String userName, String gender, String email, String mobile, String createdBy,
+			boolean changePasswordStatus, String password, String confirmPassword) {
+		this.id = id;
+		this.userName = userName;
+		this.gender = gender;
+		this.email = email;
+		this.mobile = mobile;
+		this.createdBy = createdBy;
+		this.changePasswordStatus = changePasswordStatus;
+		this.password = password;
+		this.confirmPassword = confirmPassword;
+
+	}
 
 	/**
 	 * @return userName
@@ -92,7 +88,6 @@ public class User {
 	/**
 	 * @return createdBy
 	 */
-
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -132,17 +127,10 @@ public class User {
 		this.password = password;
 	}
 
-	
-
-	/**
-	 * @return confirmPassword
-	 */
-	
-	
 	/**
 	 * 
 	 */
-	public User() {
+	public UserRequestModel() {
 		super();
 
 	}
@@ -204,20 +192,21 @@ public class User {
 	}
 
 	/**
-	 * @return UserModel
+	 * @return User
 	 */
-	public UserRequestModel getUserModel() {
-		return new UserRequestModel(
-				this.id,
-				this.userName,
-				this.gender,
-				this.email, 
-				this.mobile,
-				this.createdBy,
-				this.changePasswordStatus, 
-				this.password,
-				this.confirmPassword
-				);
+	public User getUser() {
+		if (user == null) {
+			user = new User();
+			user.setId(id);
+			user.setUserName(userName);
+			user.setEmail(email);
+			user.setMobile(mobile);
+			user.setCreatedBy(createdBy);
+			user.setPassword(password);
+			user.setConfirmPassword(confirmPassword);
+			user.setGender(gender);
+			user.setChangePasswordStatus(changePasswordStatus);
+		}
+		return user;
 	}
-
 }

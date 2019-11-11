@@ -10,13 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.http.MediaType;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import com.evaluationtestdemo.iServices.IUserRegisterationService;
-import com.evaluationtestdemo.servicesimp.UserModel;
-import com.evaluationtestdemo.utils.EmailUtil;
+import com.evaluationtestdemo.requestmodels.UserRequestModel;
 import com.evaluationtestdemo.utils.JunitUtils;
 
 /**
@@ -25,20 +22,10 @@ import com.evaluationtestdemo.utils.JunitUtils;
  */
 class UserRegisterControllerTest extends JunitUtils {
 
-	/*
-	 * @Mock UserRegisterationRepository userRep;
-	 * 
-	 * @InjectMocks UserServiceImpl userRegImp;
-	 */
+	
 	@Mock
 	IUserRegisterationService userService;
 	
-	@Mock
-	EmailUtil emailUtil;
-	
-	@Mock
-	 private JavaMailSender javaMailSender;
-
 	/**
 	 * Initialize Mocked
 	 */
@@ -51,18 +38,15 @@ class UserRegisterControllerTest extends JunitUtils {
 	@Test
 	void testRegisterUser() {
 		String uri = "/user/signup";
-		UserModel userModel = new UserModel();
+		UserRequestModel userModel = new UserRequestModel();
 		userModel.setEmail("madhurichaudhari905@gmail.com");
 		userModel.setPassword("madhuri");
 		userModel.setMobile("1234567898");
-		userModel.setFirstName("madhuri");
-		userModel.setLast_name("chaudhari");
-		userModel.setOtpVerifiedStatus(true);
+		userModel.setUserName("madhuri");
 		userModel.setChangePasswordStatus(true);
 		//TODO: We can switch createdBy accordignly user/admin
 		userModel.setCreatedBy("user");
 		userModel.setGender("female");
-		userModel.setOtp("1244");
 		
 		Mockito.when(userService.checkUserEmailAndPhone(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
 				.thenReturn(null);

@@ -44,16 +44,13 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-    <groupId>org.passay</groupId>
-    <artifactId>passay</artifactId>
-    <version>1.0</version>
-</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.0.10.Final</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -69,7 +66,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-<!-- For Swagger Implemetation -->
+		<!-- For Swagger Implemetation -->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>

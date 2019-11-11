@@ -14,47 +14,61 @@ public class LoginRequestModel {
 	private String email;
 	private String Password;
 	private String isOtpverified;
-	private String otp;
 	private String createdBy;
 	/**
-	 * @return
+	 * @return createdBy
 	 */
 	public String getCreatedBy() {
 		return createdBy;
 	}
 
+	/**
+	 * @param createdBy
+	 */
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public String getOtp() {
-		return otp;
-	}
+	
 
-	public void setOtp(String otp) {
-		this.otp = otp;
-	}
-
+	/**
+	 * @return isOtpverified
+	 */
 	public String getIsOtpverified() {
 		return isOtpverified;
 	}
 
+	/**
+	 * @param isOtpverified
+	 */
 	public void setIsOtpverified(String isOtpverified) {
 		this.isOtpverified = isOtpverified;
 	}
 
+	/**
+	 * @return Password
+	 */
 	public String getPassword() {
 		return Password;
 	}
 
+	/**
+	 * @param password
+	 */
 	public void setPassword(String password) {
 		Password = password;
 	}
 
+	/**
+	 * @return email
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * @param email
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
