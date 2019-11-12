@@ -9,16 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.evaluationdemo.validator.UserValidator;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.IUserRegisterationService;
+import com.evaluationtestdemo.iServices.IuserRegisterationService;
 import com.evaluationtestdemo.requestmodels.UserRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
 import com.evaluationtestdemo.utils.AppConstant;
 
 /**
- * * @author MadhuriC Created UserRegisterController through User can register.
+ * * @author MadhuriC
+ *  Created UserRegisterController through User can register.
  * and extending AppConstant for declare Message related response
  *
  */
@@ -29,18 +28,17 @@ public class UserRegisterController extends AppConstant {
 
 	/*** Creating bean of userRegisterService */
 	@Autowired(required = false)
-	IUserRegisterationService iUserRegisterService;
-
-	@Autowired(required = false)
-	private UserValidator userValidator;
+	IuserRegisterationService iUserRegisterService;
+	
+	
 
 	/**
-	 * Using this function User can register and take input UserRequestModel type
-	 * 
+	 * Using this function User can register and
+	 *  take input UserRequestModel type
 	 * @param userModel
 	 * @return ResponseEntity
 	 */
-	@PostMapping("/signup")
+	@PostMapping("/signUp")
 	public ResponseEntity<Object> registerUser(@Valid @RequestBody UserRequestModel userModel) {
 		User mUser = iUserRegisterService.checkUserEmailAndPhone(userModel.getMobile(), userModel.getEmail(),
 				userModel.getCreatedBy());
@@ -49,13 +47,13 @@ public class UserRegisterController extends AppConstant {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} else {
 			boolean isAdmin = userModel.getCreatedBy().equalsIgnoreCase("admin");
-			User user;
+			User user = null;
 			if (isAdmin) {
 				user = iUserRegisterService.addUser(userModel);
 			} else if (!isAdmin) {
 				user = iUserRegisterService.addUser(userModel);
 			}
-			return new ResponseEntity<Object>(new ResponseModel(true, SUCCESS, userModel.getUser().getId(), 0),
+			return new ResponseEntity<Object>(new ResponseModel(true, SUCCESS,user , 0),
 					HttpStatus.CREATED);
 		}
 	}

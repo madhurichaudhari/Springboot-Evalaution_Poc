@@ -46,16 +46,16 @@ public class User {
 
 
 	/**
-	 * @param user
+	 * @param userRequestModel
 	 */
-	public User(User user) {
-		userName=user.userName;
-		gender=user.gender;
-		mobile=user.mobile;
-		createdBy=user.createdBy;
-		password=user.password;
-		confirmPassword=user.confirmPassword;
-		changePasswordStatus=user.changePasswordStatus;		
+	public User(UserRequestModel userRequestModel) {
+		userName=userRequestModel.getUserName();
+		gender=userRequestModel.getGender();
+		mobile=userRequestModel.getMobile();
+		createdBy=userRequestModel.getCreatedBy();
+		password=userRequestModel.getPassword();
+		confirmPassword=userRequestModel.getConfirmPassword();
+		changePasswordStatus=userRequestModel.getChangePasswordStatus();		
 	}
 	
 	
@@ -203,21 +203,6 @@ public class User {
 		this.mobile = mobile;
 	}
 
-	/**
-	 * @return UserModel
-	 */
-	public UserRequestModel getUserModel() {
-		return new UserRequestModel(
-				this.id,
-				this.userName,
-				this.gender,
-				this.email, 
-				this.mobile,
-				this.createdBy,
-				this.changePasswordStatus, 
-				this.password,
-				this.confirmPassword
-				);
-	}
+
 
 }

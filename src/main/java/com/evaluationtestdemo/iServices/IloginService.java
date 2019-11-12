@@ -5,12 +5,13 @@ import com.evaluationtestdemo.entities.User;
 
 /**
  * @author MadhuriC
+ *  Created function for user Login
+ * checked email and mobile is exist or not
  *
  */
-public interface ILoginService {
+public interface IloginService {
 	/**
 	 * @param emailAddress
-	 * @param password
 	 * @param isOtpVerified
 	 * @return
 	 */
@@ -19,25 +20,15 @@ public interface ILoginService {
 	/**
 	 * @param password
 	 * @param email
-	 * @return
+	 * @return password status
 	 */
 	public boolean validateUserPassword(String password,String email);
 
 	/**
 	 * @param email
-	 * @return
-	 */
-	public User findByEmail(String email);
-	/**
-	 * @param email
-	 * @param password
-	 * @param is_otp_verified
 	 * @return User
 	 */
-	User findByEmailandPassword(String email, String password,String is_otp_verified);
-	
-	
-	
+	public User findByEmail(String email);
 	
 }
 

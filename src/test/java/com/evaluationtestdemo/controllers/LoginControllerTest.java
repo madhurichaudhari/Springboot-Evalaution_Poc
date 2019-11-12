@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.ILoginService;
+import com.evaluationtestdemo.iServices.IloginService;
 import com.evaluationtestdemo.requestmodels.LoginRequestModel;
 import com.evaluationtestdemo.utils.JunitUtils;
 
@@ -25,7 +25,7 @@ import com.evaluationtestdemo.utils.JunitUtils;
 class LoginControllerTest extends JunitUtils{
 	
 	@Mock
-	private ILoginService loginService;
+	private IloginService loginService;
 
 	@Before
 	public void setUp() {

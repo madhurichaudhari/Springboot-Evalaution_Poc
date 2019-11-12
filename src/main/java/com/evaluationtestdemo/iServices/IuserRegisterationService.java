@@ -8,11 +8,12 @@ import com.evaluationtestdemo.requestmodels.UserRequestModel;
 
 /**
  * @author MadhuriC
- *
+ * Created function for user registration
+ * checked email and mobile is exist or not
  */
 @Service
 @Transactional
-public interface IUserRegisterationService {
+public interface IuserRegisterationService {
 	/**
 	
 	 * @param userModel

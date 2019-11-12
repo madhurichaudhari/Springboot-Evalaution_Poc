@@ -8,16 +8,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.evaluationdemo.validator.UserNotFoundException;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.ILoginService;
+import com.evaluationtestdemo.iServices.IloginService;
 import com.evaluationtestdemo.repositories.LoginRepository;
 
 /**
- * @author MadhuriC LoginServiceImpl for implementing response for LoginService
+ * @author MadhuriC 
+ * LoginServiceImpl for implementing response for LoginService
+ * declare method for checked User exist or not
+ * Checked user exist or not
  *
  */
 @Service
 @Transactional
-public class LoginServiceImp implements ILoginService {
+public class LoginServiceImp implements IloginService {
 
 	@Autowired
 	private LoginRepository loginRepository;
@@ -25,15 +28,17 @@ public class LoginServiceImp implements ILoginService {
 	PasswordEncoder passwordEncoder;
 
 	@Override
-	public boolean validateUserEmail(String emailAddress) {
-		return loginRepository.existsByEmail(emailAddress);
+	public boolean validateUserEmail(String email) {
+		boolean emailStatus = false;
+		emailStatus = loginRepository.existsByEmail(email);
+		if (emailStatus) {
+			emailStatus =true;
+		} else {
+			new UserNotFoundException(" User  Not Found");
+		}
+		return emailStatus;
+		}
 
-	}
-
-	@Override
-	public User findByEmailandPassword(String email, String password, String is_otp_verified) {
-		return null;
-	}
 
 	@Override
 	public User findByEmail(String email) {
@@ -50,7 +55,13 @@ public class LoginServiceImp implements ILoginService {
 	@Override
 	public boolean validateUserPassword(String password, String email) {
 		User user = loginRepository.findByEmail(email);
-		return passwordEncoder.matches(password, user.getPassword());
-	}
+		boolean passwordStatus = false;
+		if (user != null) {
+			passwordStatus = passwordEncoder.matches(password, user.getPassword());
 
+		} else {
+			new UserNotFoundException(" User  Not Found");
+		}
+		return passwordStatus;
+	}
 }

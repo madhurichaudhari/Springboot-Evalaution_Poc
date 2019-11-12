@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * @author MadhuriC
- *for creating a k WebSecurityConfigurer
+ *for creating a  WebSecurityConfigurer
  */
 @Configuration
 @EnableWebSecurity

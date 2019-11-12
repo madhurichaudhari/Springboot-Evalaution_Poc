@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.evaluationtestdemo.entities.User;
+import com.evaluationtestdemo.iServices.IloginService;
 import com.evaluationtestdemo.requestmodels.LoginRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
-import com.evaluationtestdemo.servicesimp.LoginServiceImp;
 import com.evaluationtestdemo.utils.AppConstant;
 
 /**
- * @author MadhuriC LoginController for User can Login and extending AppConstant
- *         for declare Message related response
- *
+ * @author MadhuriC
+ *  LoginController for User can Login and
+ *   extending AppConstant for declare Message related response
  */
 @RestController
 @RequestMapping(path = "/user")
@@ -27,7 +27,7 @@ public class LoginController extends AppConstant {
 
 	/*** Creating bean of LoginService */
 	@Autowired
-	private LoginServiceImp loginService;
+	private IloginService iloginService;
 
 	/***
 	 * Using this function User can Login and take input LoginRequestModel type
@@ -37,9 +37,9 @@ public class LoginController extends AppConstant {
 	 */
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@Valid @RequestBody LoginRequestModel loginRequest) {
-		if (loginService.validateUserEmail(loginRequest.getEmail())) {
-			if (loginService.validateUserPassword(loginRequest.getPassword(), loginRequest.getEmail())) {
-				User user = loginService.findByEmail(loginRequest.getEmail());
+		if (iloginService.validateUserEmail(loginRequest.getEmail())) {
+			if (iloginService.validateUserPassword(loginRequest.getPassword(), loginRequest.getEmail())) {
+				User user = iloginService.findByEmail(loginRequest.getEmail());
 				if (user.getChangePasswordStatus()) {
 					return new ResponseEntity<Object>(
 							new ResponseModel(true, USER_LOGIN_SUCCESS, loginRequest.getEmail(), 0), HttpStatus.OK);

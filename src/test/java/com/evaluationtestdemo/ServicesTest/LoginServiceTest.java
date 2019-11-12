@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.evaluationtestdemo.repositories.LoginRepository;
@@ -20,12 +21,12 @@ import com.evaluationtestdemo.servicesimp.LoginServiceImp;
  * @author MadhuriC
  *
  */
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class LoginServiceTest {
 
 	@Mock
-	LoginRepository loginRepo;
+	LoginRepository loginRepository;
 	@InjectMocks
 	LoginServiceImp loginServiceimp;
 
@@ -46,7 +47,7 @@ public class LoginServiceTest {
 		LoginRequestModel loginRequestModel = new LoginRequestModel();
 		loginRequestModel.setEmail("Ranjeet@gmail.com");
 		loginRequestModel.setPassword("ranjeet");
-		Mockito.when(loginRepo.existsByEmail(loginRequestModel.getEmail())).thenReturn(true);
+		Mockito.when(loginRepository.existsByEmail(loginRequestModel.getEmail())).thenReturn(true);
 		boolean loginSatus = loginServiceimp.validateUserEmail(loginRequestModel.getEmail());
 		assertEquals(true, loginSatus);
 	}
@@ -60,7 +61,7 @@ public class LoginServiceTest {
 		LoginRequestModel loginRequestModel = new LoginRequestModel();
 		loginRequestModel.setEmail("madhurichaudhari905@@gmail.com");
 		loginRequestModel.setPassword("madhuri");
-		Mockito.when(loginRepo.existsByEmail(loginRequestModel.getEmail())).thenReturn(false);
+		Mockito.when(loginRepository.existsByEmail(loginRequestModel.getEmail())).thenReturn(false);
 		boolean loginSatus = loginServiceimp.validateUserEmail(loginRequestModel.getEmail());
 		assertEquals(false, loginSatus);
 	}

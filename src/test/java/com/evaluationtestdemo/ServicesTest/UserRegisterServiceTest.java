@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.evaluationtestdemo.entities.User;
 import com.evaluationtestdemo.repositories.UserRegisterationRepository;
@@ -21,7 +22,7 @@ import com.evaluationtestdemo.servicesimp.UserRegisterServiceImpl;
  * @author MadhuriC
  *
  */
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class UserRegisterServiceTest {
 
@@ -49,7 +50,7 @@ public class UserRegisterServiceTest {
 	 */
 
 	@Test
-	public void testUserRegisterWhenSuccess() {
+	public void test_UserRegister_When_Success() {
 		UserRequestModel userModel = new UserRequestModel();
 		userModel.setEmail("chaudharimadhuri905@gmail.com");
 		userModel.setId(1);
@@ -61,7 +62,7 @@ public class UserRegisterServiceTest {
 		userModel.setCreatedBy("admin");
 		userModel.setGender("female");
 		Mockito.when(passwordEncoder.encode(userModel.getPassword())).thenReturn("12345dRDCB");
-		Mockito.when(userRepository.save(userModel.getUser())).thenReturn(userModel.getUser());
+		Mockito.when(userRepository.save(new User(userModel))).thenReturn(new User(userModel));
 		User userResult = userServiceImp.addUser(userModel);
 		assertEquals("chaudhari", userResult.getUserName());
 	}
@@ -71,7 +72,7 @@ public class UserRegisterServiceTest {
 	 */
 
 	@Test
-	public void testUserRegisterWhenFailure() {
+	public void test_UserRegister_When_Fail() {
 
 		UserRequestModel userModel = new UserRequestModel();
 		userModel.setEmail("chaudharimadhuri905@gmail.com");
@@ -83,7 +84,7 @@ public class UserRegisterServiceTest {
 		userModel.setCreatedBy("admin");
 		userModel.setGender("female");
 		Mockito.when(passwordEncoder.encode(userModel.getPassword())).thenReturn("12345dRDCB");
-		Mockito.when(userRepository.save(userModel.getUser())).thenReturn(null);
+		Mockito.when(userRepository.save(new User(userModel))).thenReturn(null);
 		User userResult = userServiceImp.addUser(userModel);
 		assertEquals(null, userResult);
 	}

@@ -22,7 +22,7 @@ public interface ChangePasswordRepository extends JpaRepository<User, Long>{
 	  /**
 	 * @param password
 	 * @param id
-	 * @return
+	 * @return 0/1 if password will be update
 	 */
 	@Modifying
 	  @Query("update User u set u.password = :password where u.id = :id")
@@ -32,7 +32,7 @@ public interface ChangePasswordRepository extends JpaRepository<User, Long>{
 	  /**
 	 * @param changePasswordStatus
 	 * @param id
-	 * @return
+	 * @return 0/1 if changePasswordStatus will be update
 	 */
 	@Modifying
 	  @Query("update User u set u.changePasswordStatus = :changePasswordStatus where u.id = :id")
@@ -40,16 +40,14 @@ public interface ChangePasswordRepository extends JpaRepository<User, Long>{
 	 
 	   /**
 	 * @param id
-	 * @return
+	 * @return UserID
 	 */
 	@Modifying
-	
-	  @Query(value = "SELECT * FROM users_tbl WHERE UserID = ?id", nativeQuery =
-	  true) public int finduserByIdUser(@Param("id") long id);
+	  @Query(value = "SELECT * FROM users_tbl WHERE UserID = ?id", nativeQuery =true) public int finduserByIdUser(@Param("id") long id);
 	
 	/**
 	 * @param email
-	 * @return
+	 * @return User
 	 */
 	public User findByEmail(String email); 	
 		

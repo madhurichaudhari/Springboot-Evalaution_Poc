@@ -191,22 +191,5 @@ public class UserRequestModel {
 		this.mobile = mobile;
 	}
 
-	/**
-	 * @return User
-	 */
-	public User getUser() {
-		if (user == null) {
-			user = new User();
-			user.setId(id);
-			user.setUserName(userName);
-			user.setEmail(email);
-			user.setMobile(mobile);
-			user.setCreatedBy(createdBy);
-			user.setPassword(password);
-			user.setConfirmPassword(confirmPassword);
-			user.setGender(gender);
-			user.setChangePasswordStatus(changePasswordStatus);
-		}
-		return user;
-	}
+
 }

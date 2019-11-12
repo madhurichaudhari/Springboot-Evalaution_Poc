@@ -9,15 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.IChangePasswordService;
-import com.evaluationtestdemo.iServices.ILoginService;
+import com.evaluationtestdemo.iServices.IchangePasswordService;
+import com.evaluationtestdemo.iServices.IloginService;
 import com.evaluationtestdemo.requestmodels.ChangePasswordRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
 import com.evaluationtestdemo.utils.AppConstant;
 
 /**
- * * @author MadhuriC Created ChangePasswordController through User can change
- * Password.
+ * * @author MadhuriC
+ *  Created ChangePasswordController through User can change Password.
+ *  
  */
 @RestController
 @RequestMapping(path = "/user")
@@ -25,10 +26,10 @@ public class ChangePasswordController {
 
 	/*** Creating bean of PasswordService */
 	@Autowired(required = false)
-	IChangePasswordService changePasswordService;
+	IchangePasswordService changePasswordService;
 	/*** Creating bean of PasswordRepository */
 	@Autowired(required = false)
-	private ILoginService loginService;
+	private IloginService loginService;
 
 	/**
 	 * Using this function User can change the password and take input

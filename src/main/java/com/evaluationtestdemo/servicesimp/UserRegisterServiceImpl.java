@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.evaluationdemo.validator.UserNotFoundException;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.IUserRegisterationService;
+import com.evaluationtestdemo.iServices.IuserRegisterationService;
 import com.evaluationtestdemo.repositories.UserRegisterationRepository;
 import com.evaluationtestdemo.requestmodels.UserRequestModel;
 
@@ -16,12 +16,15 @@ import com.evaluationtestdemo.requestmodels.UserRequestModel;
 
 /**
  * @author MadhuriC
- * UserServiceImpl for implementing response for UserService 
+ * UserServiceImpl for implementing response for UserService
+ * declare method for checked User exist or not
+ * Checked user data is saved or not 
+ * Take input email,mobile
  *
  */
 @Service
 @Transactional
-public class UserRegisterServiceImpl implements IUserRegisterationService {
+public class UserRegisterServiceImpl implements IuserRegisterationService {
 
 	@Autowired
 	UserRegisterationRepository userRepository;
@@ -33,23 +36,39 @@ public class UserRegisterServiceImpl implements IUserRegisterationService {
 	
 
 	@Override
-	public User checkUserEmailAndPhone(String mobile, String email,String userType) {
-		return userRepository.findByMobileOrEmail(mobile, email);
+	public User checkUserEmailAndPhone(String mobile, String email,String userType) {		
+		  User user = userRepository.findByMobileOrEmail(mobile, email);
+			if (user != null) {
+				return user;
+			} else {
+				new UserNotFoundException(" User  Not Found");
+
+			}
+			return user;
+		
 	}
 	
 	
 	@Override
 	public User findByUsername(String userName) {
-	    return userRepository.findByUserName(userName);
+	    User user = userRepository.findByUserName(userName);
+		if (user != null) {
+			return user;
+		} else {
+			new UserNotFoundException(" User  Not Found");
+
+		}
+		return user;
+	    
 	}
 	
 	
 
 	@Override
-	public User addUser(UserRequestModel userModel) {
-		userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
-		userModel.setConfirmPassword(passwordEncoder.encode(userModel.getConfirmPassword()));
-		User muser = userRepository.save(userModel.getUser());
+	public User addUser(UserRequestModel userRequestModel) {
+		userRequestModel.setPassword(passwordEncoder.encode(userRequestModel.getPassword()));
+		userRequestModel.setConfirmPassword(passwordEncoder.encode(userRequestModel.getConfirmPassword()));
+		User muser = userRepository.save(new User(userRequestModel));
 		if(muser!=null && muser.getId()>0) {
 		return muser;	
 		}
