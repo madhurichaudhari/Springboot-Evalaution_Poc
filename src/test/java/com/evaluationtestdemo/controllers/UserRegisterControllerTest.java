@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.IuserRegisterationService;
+import com.evaluationtestdemo.iServices.IUserRegisterationService;
 import com.evaluationtestdemo.requestmodels.UserRequestModel;
 import com.evaluationtestdemo.utils.JunitUtils;
 
@@ -28,7 +28,7 @@ import com.evaluationtestdemo.utils.JunitUtils;
 class UserRegisterControllerTest extends JunitUtils {
 
 	@Mock
-	IuserRegisterationService userService;
+	IUserRegisterationService userService;
 
 	/**
 	 * Initialize Mocked
@@ -85,7 +85,7 @@ class UserRegisterControllerTest extends JunitUtils {
 		userModel.setCreatedBy("user");
 		userModel.setGender("female");
 		Mockito.when(userService.checkUserEmailAndPhone(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
-				.thenReturn(new User(userModel));
+				.thenReturn(true);
 		Mockito.when(userService.addUser(userModel)).thenReturn(new User(userModel));
 		try {
 			String inputJson = super.mapToJson(userModel);

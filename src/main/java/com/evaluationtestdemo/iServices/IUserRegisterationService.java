@@ -13,7 +13,7 @@ import com.evaluationtestdemo.requestmodels.UserRequestModel;
  */
 @Service
 @Transactional
-public interface IuserRegisterationService {
+public interface IUserRegisterationService  {
 	/**
 	
 	 * @param userModel
@@ -26,12 +26,11 @@ public interface IuserRegisterationService {
 	 * @param userType 
 	 * @return User
 	 */
-	public User checkUserEmailAndPhone(String mobile, String email, String userType);
+	public boolean checkUserEmailAndPhone(String mobile, String email, String userType);
 	/**
 	 * @param firstName
 	 * @return User
 	 */
-	public User findByUsername(String firstName);
 	
 
 }

@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.evaluationdemo.validator.UserNotFoundException;
+import com.evaluationdemo.exception.UserNotFoundException;
 import com.evaluationtestdemo.entities.User;
 import com.evaluationtestdemo.iServices.IloginService;
 import com.evaluationtestdemo.repositories.LoginRepository;

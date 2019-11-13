@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.IuserRegisterationService;
+import com.evaluationtestdemo.iServices.IUserRegisterationService;
 import com.evaluationtestdemo.requestmodels.UserRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
 import com.evaluationtestdemo.utils.AppConstant;
@@ -28,7 +28,7 @@ public class UserRegisterController extends AppConstant {
 
 	/*** Creating bean of userRegisterService */
 	@Autowired(required = false)
-	IuserRegisterationService iUserRegisterService;
+	IUserRegisterationService iUserRegisterService;
 	
 	
 
@@ -40,21 +40,17 @@ public class UserRegisterController extends AppConstant {
 	 */
 	@PostMapping("/signUp")
 	public ResponseEntity<Object> registerUser(@Valid @RequestBody UserRequestModel userModel) {
-		User mUser = iUserRegisterService.checkUserEmailAndPhone(userModel.getMobile(), userModel.getEmail(),
+		 iUserRegisterService.checkUserEmailAndPhone(userModel.getMobile(), userModel.getEmail(),
 				userModel.getCreatedBy());
-		if (mUser != null) {
-			return new ResponseEntity<Object>(new ResponseModel(false, USER_EMAIL_MOBILE_EXIST, null, 50),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		} else {
-			boolean isAdmin = userModel.getCreatedBy().equalsIgnoreCase("admin");
-			User user = null;
+			boolean isAdmin = userModel.getCreatedBy().equalsIgnoreCase("admin@hcl.com");
+			User mUser=null;
 			if (isAdmin) {
-				user = iUserRegisterService.addUser(userModel);
+				mUser = iUserRegisterService.addUser(userModel);
 			} else if (!isAdmin) {
-				user = iUserRegisterService.addUser(userModel);
+				mUser = iUserRegisterService.addUser(userModel);
 			}
-			return new ResponseEntity<Object>(new ResponseModel(true, SUCCESS,user , 0),
+			return new ResponseEntity<Object>(new ResponseModel(true, SUCCESS,mUser , 0),
 					HttpStatus.CREATED);
-		}
+				
 	}
 }

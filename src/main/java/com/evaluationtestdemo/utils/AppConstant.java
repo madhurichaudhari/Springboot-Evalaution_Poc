@@ -70,6 +70,7 @@ public class AppConstant {
 	public static final String RECONFIRM_PWD_MATCHED_FAILED = "Password dose not match";
 	public static final String EMAIL_SUBJECT = "Car Pool :: Forget-Password";
 	public static final String USER_NOT_FOUND = "User Not Found";
+	public static final String DATA_NOT_SAVED = "Data Not Saved";
 	public static final String USER_REGISTRATION_NOT_COMPLETE = "User Registration Is Not Complete";
 	public static final String USER_EMAIL_MOBILE_EXIST = "User Mobile or Email already exist";
 	public static final String VERIFY_OTP_FOR_SIGNUP = "Verify Otp for signup";

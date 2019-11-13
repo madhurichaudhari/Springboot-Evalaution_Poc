@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.evaluationdemo.validator.UserNotFoundException;
+import com.evaluationdemo.exception.UserNotFoundException;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.IuserRegisterationService;
+import com.evaluationtestdemo.iServices.IUserRegisterationService;
 import com.evaluationtestdemo.repositories.UserRegisterationRepository;
 import com.evaluationtestdemo.requestmodels.UserRequestModel;
+import com.evaluationtestdemo.utils.AppConstant;
 
 
 
@@ -24,7 +24,7 @@ import com.evaluationtestdemo.requestmodels.UserRequestModel;
  */
 @Service
 @Transactional
-public class UserRegisterServiceImpl implements IuserRegisterationService {
+public class UserRegisterServiceImpl implements IUserRegisterationService {
 
 	@Autowired
 	UserRegisterationRepository userRepository;
@@ -36,35 +36,20 @@ public class UserRegisterServiceImpl implements IuserRegisterationService {
 	
 
 	@Override
-	public User checkUserEmailAndPhone(String mobile, String email,String userType) {		
+	public boolean checkUserEmailAndPhone(String mobile, String email,String userType) {		
 		  User user = userRepository.findByMobileOrEmail(mobile, email);
 			if (user != null) {
-				return user;
-			} else {
-				new UserNotFoundException(" User  Not Found");
-
+				 throw new UserNotFoundException(AppConstant.USER_EMAIL_MOBILE_EXIST);				 
+			} 
+			else {
+				return false;
 			}
-			return user;
-		
-	}
-	
-	
-	@Override
-	public User findByUsername(String userName) {
-	    User user = userRepository.findByUserName(userName);
-		if (user != null) {
-			return user;
-		} else {
-			new UserNotFoundException(" User  Not Found");
+				
 
-		}
-		return user;
-	    
 	}
-	
-	
 
-	@Override
+	
+		@Override
 	public User addUser(UserRequestModel userRequestModel) {
 		userRequestModel.setPassword(passwordEncoder.encode(userRequestModel.getPassword()));
 		userRequestModel.setConfirmPassword(passwordEncoder.encode(userRequestModel.getConfirmPassword()));
@@ -73,8 +58,8 @@ public class UserRegisterServiceImpl implements IuserRegisterationService {
 		return muser;	
 		}
 		else {
-			new UserNotFoundException(" Data Not Saved");
+			throw new UserNotFoundException(AppConstant.DATA_NOT_SAVED);
 		}
-		return muser;
+		
 	}
 }

@@ -54,14 +54,14 @@ class ChangePasswordControllerTest extends JunitUtils {
 			changePasswordModel.setChangePasswordStatus(true);
 			changePasswordModel.setEmail("madhuric@hcl.com");
 			changePasswordModel.setUserid("1");
-			User user = new User();
-			user.setEmail("madhuric@gmail.com");
-			user.setPassword("user");
-			user.setId(1);
-			Mockito.when(loginService.findByEmail(changePasswordModel.getEmail())).thenReturn(user);
-			Mockito.when(passwordService.getMatchPassword(changePasswordModel.getOldpassword(), user.getPassword())).thenReturn(true);
-			Mockito.when(passwordService.updatepassword((user.getEmail()),changePasswordModel.getConfirmpassword())).thenReturn(1);
-			Mockito.when(passwordService.updatechangePasswordStatusrById(user.getEmail(),user.getChangePasswordStatus())).thenReturn(1);
+			UserRequestModel userRequestModel = new UserRequestModel();
+			userRequestModel.setEmail("madhuric@hcl.com");
+			userRequestModel.setPassword("user");
+			userRequestModel.setId(1);
+			Mockito.when(loginService.findByEmail(changePasswordModel.getEmail())).thenReturn(new User(userRequestModel));
+			Mockito.when(passwordService.getMatchPassword(changePasswordModel.getOldpassword(), userRequestModel.getPassword())).thenReturn(true);
+			Mockito.when(passwordService.updatepassword((userRequestModel.getEmail()),changePasswordModel.getConfirmpassword())).thenReturn(1);
+			Mockito.when(passwordService.updatechangePasswordStatusrById(userRequestModel.getEmail(),userRequestModel.getChangePasswordStatus())).thenReturn(1);
 			try {
 			String inputJson = super.mapToJson(changePasswordModel);
 			MvcResult mvcResult = mvc.perform(

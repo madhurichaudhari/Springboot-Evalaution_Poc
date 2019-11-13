@@ -1,4 +1,4 @@
-package com.evaluationdemo.validator;
+package com.evaluationdemo.exception;
 
 /**
  * @author MadhuriC
@@ -8,9 +8,7 @@ package com.evaluationdemo.validator;
  */
 public class UserNotFoundException extends RuntimeException {
 
-	  /**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
