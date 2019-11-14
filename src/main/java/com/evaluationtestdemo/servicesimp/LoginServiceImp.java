@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.evaluationdemo.exception.UserNotFoundException;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.IloginService;
+import com.evaluationtestdemo.iServices.LoginServiceInter;
 import com.evaluationtestdemo.repositories.LoginRepository;
 
 /**
@@ -20,7 +20,7 @@ import com.evaluationtestdemo.repositories.LoginRepository;
  */
 @Service
 @Transactional
-public class LoginServiceImp implements IloginService {
+public class LoginServiceImp implements LoginServiceInter {
 
 	@Autowired
 	private LoginRepository loginRepository;
@@ -34,7 +34,7 @@ public class LoginServiceImp implements IloginService {
 		if (emailStatus) {
 			emailStatus =true;
 		} else {
-			new UserNotFoundException(" User  Not Found");
+			throw new UserNotFoundException(" User  Not Found");
 		}
 		return emailStatus;
 		}
@@ -45,11 +45,11 @@ public class LoginServiceImp implements IloginService {
 		User user = loginRepository.findByEmail(email);
 		if (user != null) {
 			return user;
-		} else {
-			new UserNotFoundException(" User  Not Saved");
-
 		}
-		return user;
+		 else {
+			throw new  UserNotFoundException(" User Not Found");
+		 }
+
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class LoginServiceImp implements IloginService {
 			passwordStatus = passwordEncoder.matches(password, user.getPassword());
 
 		} else {
-			new UserNotFoundException(" User  Not Found");
+			throw new UserNotFoundException(" User  Not Found");
 		}
 		return passwordStatus;
 	}

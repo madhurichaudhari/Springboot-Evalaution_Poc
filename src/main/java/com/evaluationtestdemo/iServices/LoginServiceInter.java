@@ -9,7 +9,7 @@ import com.evaluationtestdemo.entities.User;
  * checked email and mobile is exist or not
  *
  */
-public interface IloginService {
+public interface LoginServiceInter {
 	/**
 	 * @param emailAddress
 	 * @param isOtpVerified

@@ -14,7 +14,7 @@ import com.evaluationtestdemo.entities.User;
 public class UserRequestModel {
 
 	private long id;
-	@NotBlank(message = "First Name is mandatory")
+	@NotBlank(message = "User Name is mandatory")
 	private String userName;
 	@NotBlank(message = "Enter a valid Gender Details")
 	private String gender;
@@ -54,8 +54,6 @@ public class UserRequestModel {
 	 * @param changePasswordStatus
 	 * @param password
 	 * @param confirmPassword
-	 * @param otp
-	 * @param otpVerifiedStatus
 	 */
 	public UserRequestModel(long id, String userName, String gender, String email, String mobile, String createdBy,
 			boolean changePasswordStatus, String password, String confirmPassword) {

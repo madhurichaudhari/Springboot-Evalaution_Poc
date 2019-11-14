@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.IchangePasswordService;
-import com.evaluationtestdemo.iServices.IloginService;
+import com.evaluationtestdemo.iServices.ChangePasswordServiceInter;
+import com.evaluationtestdemo.iServices.LoginServiceInter;
 import com.evaluationtestdemo.requestmodels.ChangePasswordRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
 import com.evaluationtestdemo.utils.AppConstant;
@@ -23,13 +23,10 @@ import com.evaluationtestdemo.utils.AppConstant;
 @RestController
 @RequestMapping(path = "/user")
 public class ChangePasswordController {
-
-	/*** Creating bean of PasswordService */
-	@Autowired(required = false)
-	IchangePasswordService changePasswordService;
-	/*** Creating bean of PasswordRepository */
-	@Autowired(required = false)
-	private IloginService loginService;
+	@Autowired
+	private ChangePasswordServiceInter changePasswordService;
+	@Autowired
+	private LoginServiceInter loginService;
 
 	/**
 	 * Using this function User can change the password and take input
@@ -44,14 +41,20 @@ public class ChangePasswordController {
 			User userdata = loginService.findByEmail(changepassword.getEmail());
 
 			if (userdata != null) {
-				if (changePasswordService.getMatchPassword(changepassword.getOldpassword(), userdata.getPassword())) {
-
+				if (changePasswordService.validateMatchPassword(changepassword.getOldpassword(), userdata.getPassword())) {
+					if(changepassword.getOldpassword().equalsIgnoreCase(changepassword.getNewpassword())) {
+						return new ResponseEntity<Object>(new ResponseModel(false, AppConstant.PWD_OLD_NEW_NOT_SAME, null, 0),
+								HttpStatus.INTERNAL_SERVER_ERROR);
+						
+					}
+					
 					int passwordStatus = changePasswordService.updatepassword((userdata.getEmail()),
 							changepassword.getConfirmpassword());
 					if (passwordStatus == 1) {
 						userdata.setChangePasswordStatus(true);
 						changePasswordService.updatechangePasswordStatusrById(userdata.getEmail(),
 								userdata.getChangePasswordStatus());
+						
 						return new ResponseEntity<Object>(new ResponseModel(true, AppConstant.SUCCESSFULLY_PWD_CHANGED,
 								userdata.getEmail(), passwordStatus), HttpStatus.OK);
 					} else {

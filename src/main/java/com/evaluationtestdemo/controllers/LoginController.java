@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.IloginService;
+import com.evaluationtestdemo.iServices.LoginServiceInter;
 import com.evaluationtestdemo.requestmodels.LoginRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
 import com.evaluationtestdemo.utils.AppConstant;
@@ -27,36 +27,36 @@ public class LoginController extends AppConstant {
 
 	/*** Creating bean of LoginService */
 	@Autowired
-	private IloginService iloginService;
+	private LoginServiceInter loginServiceInter;
 
 	/***
 	 * Using this function User can Login and take input LoginRequestModel type
 	 * 
-	 * @param loginRequest
+	 * @param loginRequestModel
 	 * @return ResponseEntity
 	 */
 	@PostMapping("/login")
-	public ResponseEntity<Object> login(@Valid @RequestBody LoginRequestModel loginRequest) {
-		if (iloginService.validateUserEmail(loginRequest.getEmail())) {
-			if (iloginService.validateUserPassword(loginRequest.getPassword(), loginRequest.getEmail())) {
-				User user = iloginService.findByEmail(loginRequest.getEmail());
+	public ResponseEntity<Object> login(@Valid @RequestBody LoginRequestModel loginRequestModel) {
+		if (loginServiceInter.validateUserEmail(loginRequestModel.getEmail())) {
+			if (loginServiceInter.validateUserPassword(loginRequestModel.getPassword(), loginRequestModel.getEmail())) {
+				User user = loginServiceInter.findByEmail(loginRequestModel.getEmail());
 				if (user.getChangePasswordStatus()) {
 					return new ResponseEntity<Object>(
-							new ResponseModel(true, USER_LOGIN_SUCCESS, loginRequest.getEmail(), 0), HttpStatus.OK);
+							new ResponseModel(true, USER_LOGIN_SUCCESS, loginRequestModel.getEmail(), 0), HttpStatus.OK);
 				} else {
 
 					return new ResponseEntity<Object>(
-							new ResponseModel(true, USER_FIRST_TIME, loginRequest.getEmail(), 0), HttpStatus.OK);
+							new ResponseModel(true, USER_FIRST_TIME, loginRequestModel.getEmail(), 0), HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 			} else {
-				return new ResponseEntity<Object>(new ResponseModel(false, PASSWORD_DOES_NOT_EXIST, loginRequest, 0),
+				return new ResponseEntity<Object>(new ResponseModel(false, PASSWORD_DOES_NOT_EXIST, loginRequestModel, 0),
 						// HttpStatus.OK);
-						HttpStatus.OK);
+						HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		} else {
-			return new ResponseEntity<Object>(new ResponseModel(false, EMAIL_DOES_NOT_EXIST, loginRequest, 0),
-					HttpStatus.OK);
+			return new ResponseEntity<Object>(new ResponseModel(false, EMAIL_DOES_NOT_EXIST, loginRequestModel, 0),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}

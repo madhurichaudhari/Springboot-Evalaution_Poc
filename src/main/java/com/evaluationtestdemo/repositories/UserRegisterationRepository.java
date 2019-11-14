@@ -15,7 +15,9 @@ public interface UserRegisterationRepository  extends JpaRepository<User, Long> 
 	/**
 	 * @param mobile
 	 * @param email
+	 * @return User
 	 */
+	
 	User findByMobileOrEmail(String mobile,String email);
 
 	}

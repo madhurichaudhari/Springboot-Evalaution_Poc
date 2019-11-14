@@ -3,20 +3,23 @@
  */
 package com.evaluationtestdemo.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import com.evaluationdemo.exception.NoObjRespnseModel;
+import com.evaluationtestdemo.EvaluationTestDemoApplication;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.IUserRegisterationService;
+import com.evaluationtestdemo.iServices.UserRegisterationServiceInter;
 import com.evaluationtestdemo.requestmodels.UserRequestModel;
-import com.evaluationtestdemo.utils.JunitUtils;
+import com.evaluationtestdemo.utils.AppConstant;
 
 /**
  * Create UserRegisterControllerTest.class Test here UserRegisterControllerTest
@@ -25,81 +28,71 @@ import com.evaluationtestdemo.utils.JunitUtils;
  * @author MadhuriC
  *
  */
-class UserRegisterControllerTest extends JunitUtils {
+@ExtendWith(MockitoExtension.class)
+@SpringBootTest(classes = EvaluationTestDemoApplication.class)
+class UserRegisterControllerTest {
 
 	@Mock
-	IUserRegisterationService userService;
+	UserRegisterationServiceInter userRegisterServiceInter;
+
+	@InjectMocks
+	UserRegisterController userRegisterController;
 
 	/**
-	 * Initialize Mocked
+	 * Test User Registration checkUserEmailAndPhone and addUser if will return 201
+	 * it will be success
+	 * 
+	 */
+	@Test
+	public void testRegisterUserWhenSucess() {
+		UserRequestModel userRequestModel = new UserRequestModel();
+		userRequestModel.setEmail("madhurichaudhari905@gmail.com");
+		userRequestModel.setId(1);
+		userRequestModel.setPassword("madhuri");
+		userRequestModel.setConfirmPassword("madhuri");
+		userRequestModel.setMobile("1234567898");
+		userRequestModel.setUserName("madhuri");
+		userRequestModel.setChangePasswordStatus(true);
+		// TODO: We can switch createdBy accordignly user/admin
+		userRequestModel.setCreatedBy("user");
+		userRequestModel.setGender("female");
+		Mockito.when(userRegisterServiceInter.checkUserEmailAndPhone(Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyString())).thenReturn(null);
+		Mockito.when(userRegisterServiceInter.addUser(userRequestModel)).thenReturn(new User(userRequestModel));
+
+		ResponseEntity<Object> entity = userRegisterController.registerUser(userRequestModel);
+		assertThat(entity.getStatusCodeValue()).isEqualTo(201);
+
+	}
+
+	/**
+	 * Test User Registration checkUserEmailAndPhone and addUser if will return 200
+	 * it will be Fail.
+	 * 
 	 */
 
-	@Before
-	public void setUp() {
-		super.setUp();
-	}
+	@Test
+	public void testRegisterUserWhenFail() {
+		UserRequestModel userRequestModel = new UserRequestModel();
+		userRequestModel.setEmail("madhurichaudhari905@gmail.com");
+		userRequestModel.setId(1);
+		userRequestModel.setPassword("madhuri");
+		userRequestModel.setConfirmPassword("madhuri");
+		userRequestModel.setMobile("1234567898");
+		userRequestModel.setUserName("madhuri");
+		userRequestModel.setChangePasswordStatus(true);
+		// TODO: We can switch createdBy accordignly user/admin
+		userRequestModel.setCreatedBy("user");
+		userRequestModel.setGender("female");
 
-	@Test
-	public void test_Register_User_When_Sucess() {
-		String uri = "/user/signUp";
-		UserRequestModel userModel = new UserRequestModel();
-		userModel.setEmail("madhurichaudhari905@gmail.com");
-		userModel.setId(1);
-		userModel.setPassword("madhuri");
-		userModel.setConfirmPassword("madhuri");
-		userModel.setMobile("1234567898");
-		userModel.setUserName("madhuri");
-		userModel.setChangePasswordStatus(true);
-		// TODO: We can switch createdBy accordignly user/admin
-		userModel.setCreatedBy("user");
-		userModel.setGender("female");
-		Mockito.when(userService.checkUserEmailAndPhone(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
-				.thenReturn(null);
-		Mockito.when(userService.addUser(userModel)).thenReturn(new User(userModel));
-		try {
-			String inputJson = super.mapToJson(userModel);
-			MvcResult mvcResult = mvc.perform(
-					MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
-					.andReturn();
-			int status = mvcResult.getResponse().getStatus();
-			assertEquals(201, status);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ResponseEntity<Object> responseEntity = new ResponseEntity<Object>(
+				new NoObjRespnseModel(true, AppConstant.USER_EMAIL_MOBILE_EXIST), HttpStatus.OK);
+
+		Mockito.when(userRegisterServiceInter.checkUserEmailAndPhone(userRequestModel.getMobile(),
+				userRequestModel.getEmail(), userRequestModel.getCreatedBy())).thenReturn(responseEntity);
+
+		ResponseEntity<Object> entity = userRegisterController.registerUser(userRequestModel);
+		assertThat(entity.getStatusCodeValue()).isEqualTo(200);
 	}
-	
-	
-	@Test
-	public void test_Register_User_When_Fail() {
-		String uri = "/user/signUp";
-		UserRequestModel userModel = new UserRequestModel();
-		userModel.setEmail("madhurichaudhari905@gmail.com");
-		userModel.setId(1);
-		userModel.setPassword("madhuri");
-		userModel.setConfirmPassword("madhuri");
-		userModel.setMobile("1234567898");
-		userModel.setUserName("madhuri");
-		userModel.setChangePasswordStatus(true);
-		// TODO: We can switch createdBy accordignly user/admin
-		userModel.setCreatedBy("user");
-		userModel.setGender("female");
-		Mockito.when(userService.checkUserEmailAndPhone(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
-				.thenReturn(true);
-		Mockito.when(userService.addUser(userModel)).thenReturn(new User(userModel));
-		try {
-			String inputJson = super.mapToJson(userModel);
-			MvcResult mvcResult = mvc.perform(
-					MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
-					.andReturn();
-			int status = mvcResult.getResponse().getStatus();
-			assertEquals(201, status);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	
 
 }

@@ -36,13 +36,6 @@ public class User {
 	private String password;
 	@Column
 	private String confirmPassword;
-	
-	
-	
-
-
-
-
 
 
 	/**
@@ -50,6 +43,7 @@ public class User {
 	 */
 	public User(UserRequestModel userRequestModel) {
 		userName=userRequestModel.getUserName();
+		email=userRequestModel.getEmail();
 		gender=userRequestModel.getGender();
 		mobile=userRequestModel.getMobile();
 		createdBy=userRequestModel.getCreatedBy();

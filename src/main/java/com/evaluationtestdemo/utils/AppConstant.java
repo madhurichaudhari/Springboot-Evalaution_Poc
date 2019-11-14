@@ -64,6 +64,7 @@ public class AppConstant {
 	public static final String SUCCESSFULLY_PWD_CHANGED = "Password changed succesfully";
 	public static final String SUCCESSFULLY_PWD_NOT_CHANGED = "Password does not changed ";
 	public static final String PWD_MATCHED_FAILED = "Old Password dose not match.";
+	public static final String PWD_OLD_NEW_NOT_SAME = "Old Password and New Password does not same.";
 	public static final String Yes = "T";
 	public static final String No = "F";
 	public static final String USER_NOT_EXIST = "User does not exist";

@@ -15,6 +15,12 @@ public class UserNotFoundException extends RuntimeException {
 	 * @param exception
 	 */
 	
+	public UserNotFoundException() {
+	    super();
+	  }
+	/**
+	 * @param exception
+	 */
 	public UserNotFoundException(String exception) {
 	    super(exception);
 	  }

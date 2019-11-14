@@ -10,7 +10,7 @@ package com.evaluationtestdemo.iServices;
  * declare function for update password 
  *Take input email,changePasswordstatus,old password,password
  */
-public interface IchangePasswordService {
+public interface ChangePasswordServiceInter {
 
 	/**
 	 * @param email
@@ -31,7 +31,7 @@ public interface IchangePasswordService {
 	 * @param password
 	 * @return true OR  false if password will be match
 	 */
-	public boolean getMatchPassword(String oldpassword, String password);
+	public boolean validateMatchPassword(String oldpassword, String password);
 
 }
 

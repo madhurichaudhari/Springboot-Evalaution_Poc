@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.IUserRegisterationService;
+import com.evaluationtestdemo.iServices.UserRegisterationServiceInter;
 import com.evaluationtestdemo.requestmodels.UserRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
 import com.evaluationtestdemo.utils.AppConstant;
@@ -28,29 +28,36 @@ public class UserRegisterController extends AppConstant {
 
 	/*** Creating bean of userRegisterService */
 	@Autowired(required = false)
-	IUserRegisterationService iUserRegisterService;
+	UserRegisterationServiceInter userRegisterService;
 	
 	
 
 	/**
 	 * Using this function User can register and
 	 *  take input UserRequestModel type
-	 * @param userModel
+	 * @param userRequestModel
 	 * @return ResponseEntity
 	 */
 	@PostMapping("/signUp")
-	public ResponseEntity<Object> registerUser(@Valid @RequestBody UserRequestModel userModel) {
-		 iUserRegisterService.checkUserEmailAndPhone(userModel.getMobile(), userModel.getEmail(),
-				userModel.getCreatedBy());
-			boolean isAdmin = userModel.getCreatedBy().equalsIgnoreCase("admin@hcl.com");
-			User mUser=null;
+	public ResponseEntity<Object> registerUser(@Valid @RequestBody UserRequestModel userRequestModel) {
+		User mUser=null;
+		if(userRegisterService.checkUserEmailAndPhone(userRequestModel.getMobile(), userRequestModel.getEmail(),
+				userRequestModel.getCreatedBy())==null) {
+			boolean isAdmin = userRequestModel.getCreatedBy().equalsIgnoreCase("admin@hcl.com");
+			
 			if (isAdmin) {
-				mUser = iUserRegisterService.addUser(userModel);
+				mUser = userRegisterService.addUser(userRequestModel);
 			} else if (!isAdmin) {
-				mUser = iUserRegisterService.addUser(userModel);
+				mUser = userRegisterService.addUser(userRequestModel);
 			}
-			return new ResponseEntity<Object>(new ResponseModel(true, SUCCESS,mUser , 0),
+			return new ResponseEntity<Object>(new ResponseModel(true, SUCCESS,mUser, 0),
 					HttpStatus.CREATED);
-				
+		}
+		else {
+			return userRegisterService.checkUserEmailAndPhone(userRequestModel.getMobile(), userRequestModel.getEmail(),
+					userRequestModel.getCreatedBy());
+		}
+		
+		
 	}
 }

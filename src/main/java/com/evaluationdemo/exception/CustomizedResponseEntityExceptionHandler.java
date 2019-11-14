@@ -11,6 +11,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -19,17 +20,16 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  * @author MadhuriC
  *
  */
-@ControllerAdvice
+@RestControllerAdvice
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
 	/**
 	 * @param ex
-	 * @param request
-	 * @return
+	 * @return ResponseEntity<Object>
 	 * @throws Exception
 	 */
 	@ExceptionHandler(Exception.class)
-	public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) throws Exception {
+	public final ResponseEntity<Object> handleAllExceptions(Exception ex) throws Exception {
 
 		NoObjRespnseModel exceptionResponse = new NoObjRespnseModel(false, ex.getMessage());
 
@@ -39,17 +39,16 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	/**
 	 * Product not found Exception If Not get id
 	 * @param ex
-	 * @param request
-	 * @return
+	 * @return ResponseEntity<Object>
 	 * @throws Exception
 	 */
 	@ExceptionHandler(UserNotFoundException.class)
-	public final ResponseEntity<Object> handleUserNotFoundExceptions(Exception ex, WebRequest request)
+	public final ResponseEntity<Object> handleUserNotFoundExceptions(Exception ex)
 			throws Exception {
 
 		NoObjRespnseModel exceptionResponse = new NoObjRespnseModel(true, ex.getMessage());
 
-		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Object> (exceptionResponse, HttpStatus.NOT_FOUND);
 
 	}
 

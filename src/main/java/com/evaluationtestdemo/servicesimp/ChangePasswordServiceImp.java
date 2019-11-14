@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.IchangePasswordService;
+import com.evaluationtestdemo.iServices.ChangePasswordServiceInter;
 import com.evaluationtestdemo.repositories.ChangePasswordRepository;
 import com.evaluationtestdemo.repositories.LoginRepository;
 
@@ -20,7 +20,7 @@ import com.evaluationtestdemo.repositories.LoginRepository;
  */
 @Service
 @Transactional
-public class ChangePasswordServiceImp implements IchangePasswordService {
+public class ChangePasswordServiceImp implements ChangePasswordServiceInter {
 
 	@Autowired
 	ChangePasswordRepository passwordRepository;
@@ -45,7 +45,7 @@ public class ChangePasswordServiceImp implements IchangePasswordService {
 	}
 
 	@Override
-	public boolean getMatchPassword(String oldpassword, String password) {
+	public boolean validateMatchPassword(String oldpassword, String password) {
 		boolean passwordStatus=passwordEncoder.matches(oldpassword, password);
 		return passwordStatus;
 	}
