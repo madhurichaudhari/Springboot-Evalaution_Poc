@@ -8,10 +8,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.evaluationdemo.exception.NoObjRespnseModel;
+import com.evaluationdemo.exception.UserNotFoundException;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.UserRegisterationServiceInter;
 import com.evaluationtestdemo.repositories.UserRegisterationRepository;
 import com.evaluationtestdemo.requestmodels.UserRequestModel;
+import com.evaluationtestdemo.servicesinter.UserRegisterationServiceInter;
 import com.evaluationtestdemo.utils.AppConstant;
 
 /**
@@ -22,7 +23,7 @@ import com.evaluationtestdemo.utils.AppConstant;
  */
 @Service
 @Transactional
-public class UserRegisterServiceImpl implements UserRegisterationServiceInter {
+public class UserRegisterServiceImp implements UserRegisterationServiceInter {
 
 	@Autowired
 	UserRegisterationRepository userRepository;
@@ -32,7 +33,7 @@ public class UserRegisterServiceImpl implements UserRegisterationServiceInter {
 	PasswordEncoder passwordEncoder;
 
 	@Override
-	public ResponseEntity<Object> checkUserEmailAndPhone(String mobile, String email, String userType) {
+	public ResponseEntity<Object> validateUserEmailAndPhone(String mobile, String email, String userType) {
 		User user = userRepository.findByMobileOrEmail(mobile, email);
 		if (user != null) {
 			return new ResponseEntity<Object>(new NoObjRespnseModel(true, AppConstant.USER_EMAIL_MOBILE_EXIST),
@@ -47,13 +48,12 @@ public class UserRegisterServiceImpl implements UserRegisterationServiceInter {
 	public User addUser(UserRequestModel userRequestModel) {
 		userRequestModel.setPassword(passwordEncoder.encode(userRequestModel.getPassword()));
 		userRequestModel.setConfirmPassword(passwordEncoder.encode(userRequestModel.getConfirmPassword()));
-		try {
-			User muser = userRepository.save(new User(userRequestModel));
-			return muser;
-		} catch (Exception e) {
-			return null;
-
+		User user = userRepository.save(new User(userRequestModel));
+		if (user != null) {
+			return user;
 		}
-
-	}
+		 else {
+			throw new  UserNotFoundException(" User Details are  not saved");
+		 }
+			}
 }

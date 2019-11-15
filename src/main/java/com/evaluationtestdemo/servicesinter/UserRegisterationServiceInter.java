@@ -1,4 +1,4 @@
-package com.evaluationtestdemo.iServices;
+package com.evaluationtestdemo.servicesinter;
 import javax.transaction.Transactional;
 
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public interface UserRegisterationServiceInter  {
 	 * @param userType 
 	 * @return User
 	 */
-	public ResponseEntity<Object> checkUserEmailAndPhone(String mobile, String email, String userType);
+	public ResponseEntity<Object> validateUserEmailAndPhone(String mobile, String email, String userType);
 	/**
 	 * @param firstName
 	 * @return User

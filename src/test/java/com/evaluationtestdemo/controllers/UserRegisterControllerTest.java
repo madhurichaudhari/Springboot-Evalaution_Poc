@@ -4,7 +4,6 @@
 package com.evaluationtestdemo.controllers;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,9 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.evaluationdemo.exception.NoObjRespnseModel;
 import com.evaluationtestdemo.EvaluationTestDemoApplication;
+import com.evaluationtestdemo.controllers.UserRegisterController;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.UserRegisterationServiceInter;
 import com.evaluationtestdemo.requestmodels.UserRequestModel;
+import com.evaluationtestdemo.servicesinter.UserRegisterationServiceInter;
 import com.evaluationtestdemo.utils.AppConstant;
 
 /**
@@ -56,8 +56,8 @@ class UserRegisterControllerTest {
 		// TODO: We can switch createdBy accordignly user/admin
 		userRequestModel.setCreatedBy("user");
 		userRequestModel.setGender("female");
-		Mockito.when(userRegisterServiceInter.checkUserEmailAndPhone(Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString())).thenReturn(null);
+		Mockito.when(userRegisterServiceInter.validateUserEmailAndPhone(userRequestModel.getMobile(),userRequestModel.getEmail(),
+				userRequestModel.getCreatedBy())).thenReturn(null);
 		Mockito.when(userRegisterServiceInter.addUser(userRequestModel)).thenReturn(new User(userRequestModel));
 
 		ResponseEntity<Object> entity = userRegisterController.registerUser(userRequestModel);
@@ -84,11 +84,9 @@ class UserRegisterControllerTest {
 		// TODO: We can switch createdBy accordignly user/admin
 		userRequestModel.setCreatedBy("user");
 		userRequestModel.setGender("female");
-
 		ResponseEntity<Object> responseEntity = new ResponseEntity<Object>(
 				new NoObjRespnseModel(true, AppConstant.USER_EMAIL_MOBILE_EXIST), HttpStatus.OK);
-
-		Mockito.when(userRegisterServiceInter.checkUserEmailAndPhone(userRequestModel.getMobile(),
+		Mockito.when(userRegisterServiceInter.validateUserEmailAndPhone(userRequestModel.getMobile(),
 				userRequestModel.getEmail(), userRequestModel.getCreatedBy())).thenReturn(responseEntity);
 
 		ResponseEntity<Object> entity = userRegisterController.registerUser(userRequestModel);

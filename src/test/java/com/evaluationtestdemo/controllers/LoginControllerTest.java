@@ -4,7 +4,6 @@
 package com.evaluationtestdemo.controllers;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,10 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
 import com.evaluationtestdemo.EvaluationTestDemoApplication;
+import com.evaluationtestdemo.controllers.LoginController;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.LoginServiceInter;
 import com.evaluationtestdemo.requestmodels.LoginRequestModel;
 import com.evaluationtestdemo.requestmodels.UserRequestModel;
+import com.evaluationtestdemo.servicesinter.LoginServiceInter;
 
 /**
  * @author MadhuriC
@@ -52,7 +52,7 @@ class LoginControllerTest {
 		Mockito.when(loginService.validateUserEmail(loginRequestModel.getEmail())).thenReturn(true);
 		Mockito.when(loginService.validateUserPassword(loginRequestModel.getPassword(), loginRequestModel.getEmail()))
 				.thenReturn(true);
-		Mockito.when(loginService.findByEmail(loginRequestModel.getEmail())).thenReturn(user);
+		Mockito.when(loginService.fetchByEmail(loginRequestModel.getEmail())).thenReturn(user);
 		ResponseEntity<Object> entity = loginController.login(loginRequestModel);
 		assertThat(entity.getStatusCodeValue()).isEqualTo(200);
 
@@ -72,7 +72,8 @@ class LoginControllerTest {
 		user.setChangePasswordStatus(false);
 		Mockito.when(loginService.validateUserEmail(loginRequestModel.getEmail())).thenReturn(true);
 		Mockito.when(loginService.validateUserPassword(loginRequestModel.getPassword(), loginRequestModel.getEmail()))
-		.thenReturn(false);
+		.thenReturn(true);
+		Mockito.when(loginService.fetchByEmail(loginRequestModel.getEmail())).thenReturn(user);
 		ResponseEntity<Object> entity = loginController.login(loginRequestModel);
 		assertThat(entity.getStatusCodeValue()).isEqualTo(500);
 

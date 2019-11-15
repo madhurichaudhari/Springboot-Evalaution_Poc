@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.ChangePasswordServiceInter;
 import com.evaluationtestdemo.repositories.ChangePasswordRepository;
 import com.evaluationtestdemo.repositories.LoginRepository;
+import com.evaluationtestdemo.servicesinter.ChangePasswordServiceInter;
 
 /*
  *  PasswordServiceImpl for implementing response for PasswordService 

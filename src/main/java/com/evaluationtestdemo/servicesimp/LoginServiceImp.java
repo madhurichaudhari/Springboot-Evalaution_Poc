@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.evaluationdemo.exception.UserNotFoundException;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.LoginServiceInter;
 import com.evaluationtestdemo.repositories.LoginRepository;
+import com.evaluationtestdemo.servicesinter.LoginServiceInter;
 
 /**
  * @author MadhuriC 
@@ -34,14 +34,14 @@ public class LoginServiceImp implements LoginServiceInter {
 		if (emailStatus) {
 			emailStatus =true;
 		} else {
-			throw new UserNotFoundException(" User  Not Found");
+			throw new UserNotFoundException(" User Not Found");
 		}
 		return emailStatus;
 		}
 
 
 	@Override
-	public User findByEmail(String email) {
+	public User fetchByEmail(String email) {
 		User user = loginRepository.findByEmail(email);
 		if (user != null) {
 			return user;
@@ -60,7 +60,7 @@ public class LoginServiceImp implements LoginServiceInter {
 			passwordStatus = passwordEncoder.matches(password, user.getPassword());
 
 		} else {
-			throw new UserNotFoundException(" User  Not Found");
+			throw new UserNotFoundException(" User Not Found");
 		}
 		return passwordStatus;
 	}

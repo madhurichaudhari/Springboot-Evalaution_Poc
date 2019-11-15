@@ -1,21 +1,15 @@
-package com.evaluationtestdemo.servicestest;
+package com.evaluationtestdemo.servicesimp;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
-
 import com.evaluationtestdemo.EvaluationTestDemoApplication;
 import com.evaluationtestdemo.entities.User;
 import com.evaluationtestdemo.repositories.ChangePasswordRepository;
@@ -26,9 +20,9 @@ import com.evaluationtestdemo.servicesimp.LoginServiceImp;
 /**
  * ChangePasswordServiceTest for test the logic of Change password
  */
-@ExtendWith(MockitoExtension.class)
 @SpringBootTest(classes = EvaluationTestDemoApplication.class)
-public class ChangePasswordServiceTest {
+
+public class ChangePasswordServiceImpTest {
 	
 	@Mock
 	ChangePasswordRepository passwordRepository;
@@ -45,7 +39,7 @@ public class ChangePasswordServiceTest {
 	/**
 	 * Initialize mocked
 	 */
-	@Before
+	@BeforeEach
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 

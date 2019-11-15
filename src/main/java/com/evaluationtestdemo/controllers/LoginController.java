@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.LoginServiceInter;
 import com.evaluationtestdemo.requestmodels.LoginRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
+import com.evaluationtestdemo.servicesinter.LoginServiceInter;
 import com.evaluationtestdemo.utils.AppConstant;
 
 /**
@@ -39,7 +39,7 @@ public class LoginController extends AppConstant {
 	public ResponseEntity<Object> login(@Valid @RequestBody LoginRequestModel loginRequestModel) {
 		if (loginServiceInter.validateUserEmail(loginRequestModel.getEmail())) {
 			if (loginServiceInter.validateUserPassword(loginRequestModel.getPassword(), loginRequestModel.getEmail())) {
-				User user = loginServiceInter.findByEmail(loginRequestModel.getEmail());
+				User user = loginServiceInter.fetchByEmail(loginRequestModel.getEmail());
 				if (user.getChangePasswordStatus()) {
 					return new ResponseEntity<Object>(
 							new ResponseModel(true, USER_LOGIN_SUCCESS, loginRequestModel.getEmail(), 0), HttpStatus.OK);

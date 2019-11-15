@@ -1,4 +1,4 @@
-package com.evaluationtestdemo.iServices;
+package com.evaluationtestdemo.servicesinter;
 
 import com.evaluationtestdemo.entities.User;
 
@@ -28,7 +28,7 @@ public interface LoginServiceInter {
 	 * @param email
 	 * @return User
 	 */
-	public User findByEmail(String email);
+	public User fetchByEmail(String email);
 	
 }
 

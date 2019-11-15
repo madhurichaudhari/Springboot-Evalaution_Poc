@@ -3,8 +3,8 @@
  */
 package com.evaluationtestdemo.controllers;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,15 +13,15 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
-
 import com.evaluationtestdemo.EvaluationTestDemoApplication;
+import com.evaluationtestdemo.controllers.ChangePasswordController;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.ChangePasswordServiceInter;
-import com.evaluationtestdemo.iServices.LoginServiceInter;
 import com.evaluationtestdemo.repositories.ChangePasswordRepository;
 import com.evaluationtestdemo.repositories.LoginRepository;
 import com.evaluationtestdemo.requestmodels.ChangePasswordRequestModel;
 import com.evaluationtestdemo.requestmodels.UserRequestModel;
+import com.evaluationtestdemo.servicesinter.ChangePasswordServiceInter;
+import com.evaluationtestdemo.servicesinter.LoginServiceInter;
 
 /**
  * * @author MadhuriC
@@ -68,7 +68,7 @@ class ChangePasswordControllerTest {
 		User user = new User(userRequestModel);
 		user.setEmail("admin@gmail.com");
 		user.setChangePasswordStatus(true);
-		Mockito.when(loginService.findByEmail(changePasswordModel.getEmail())).thenReturn(user);
+		Mockito.when(loginService.fetchByEmail(changePasswordModel.getEmail())).thenReturn(user);
 		Mockito.when(changePasswordService.validateMatchPassword(changePasswordModel.getOldpassword(),
 				userRequestModel.getPassword())).thenReturn(true);
 		Mockito.when(
@@ -103,7 +103,7 @@ class ChangePasswordControllerTest {
 		User user = new User(userRequestModel);
 		user.setEmail("admin@gmail.com");
 		user.setChangePasswordStatus(false);
-		Mockito.when(loginService.findByEmail(changePasswordModel.getEmail())).thenReturn(user);
+		Mockito.when(loginService.fetchByEmail(changePasswordModel.getEmail())).thenReturn(user);
 		Mockito.when(changePasswordService.validateMatchPassword(changePasswordModel.getOldpassword(),
 				userRequestModel.getPassword())).thenReturn(true);
 		Mockito.when(

@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.ChangePasswordServiceInter;
-import com.evaluationtestdemo.iServices.LoginServiceInter;
 import com.evaluationtestdemo.requestmodels.ChangePasswordRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
+import com.evaluationtestdemo.servicesinter.ChangePasswordServiceInter;
+import com.evaluationtestdemo.servicesinter.LoginServiceInter;
 import com.evaluationtestdemo.utils.AppConstant;
 
 /**
@@ -38,7 +38,7 @@ public class ChangePasswordController {
 	@PostMapping("/changePassword")
 	public ResponseEntity<Object> changePassword(@RequestBody ChangePasswordRequestModel changepassword) {
 		if (changepassword.getNewpassword().equals(changepassword.getConfirmpassword())) {
-			User userdata = loginService.findByEmail(changepassword.getEmail());
+			User userdata = loginService.fetchByEmail(changepassword.getEmail());
 
 			if (userdata != null) {
 				if (changePasswordService.validateMatchPassword(changepassword.getOldpassword(), userdata.getPassword())) {

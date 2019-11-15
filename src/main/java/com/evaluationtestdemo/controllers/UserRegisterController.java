@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.evaluationtestdemo.entities.User;
-import com.evaluationtestdemo.iServices.UserRegisterationServiceInter;
 import com.evaluationtestdemo.requestmodels.UserRequestModel;
 import com.evaluationtestdemo.responsemodels.ResponseModel;
+import com.evaluationtestdemo.servicesinter.UserRegisterationServiceInter;
 import com.evaluationtestdemo.utils.AppConstant;
 
 /**
@@ -41,7 +41,7 @@ public class UserRegisterController extends AppConstant {
 	@PostMapping("/signUp")
 	public ResponseEntity<Object> registerUser(@Valid @RequestBody UserRequestModel userRequestModel) {
 		User mUser=null;
-		if(userRegisterService.checkUserEmailAndPhone(userRequestModel.getMobile(), userRequestModel.getEmail(),
+		if(userRegisterService.validateUserEmailAndPhone(userRequestModel.getMobile(), userRequestModel.getEmail(),
 				userRequestModel.getCreatedBy())==null) {
 			boolean isAdmin = userRequestModel.getCreatedBy().equalsIgnoreCase("admin@hcl.com");
 			
@@ -54,7 +54,7 @@ public class UserRegisterController extends AppConstant {
 					HttpStatus.CREATED);
 		}
 		else {
-			return userRegisterService.checkUserEmailAndPhone(userRequestModel.getMobile(), userRequestModel.getEmail(),
+			return userRegisterService.validateUserEmailAndPhone(userRequestModel.getMobile(), userRequestModel.getEmail(),
 					userRequestModel.getCreatedBy());
 		}
 		
