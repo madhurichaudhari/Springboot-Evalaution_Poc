@@ -48,6 +48,7 @@ public class UserRegisterServiceImpTest {
 	 * test user Registration
 	 */
 
+	
 	@Test
 	public void testUserRegisterForAddUserWhenSuccess() {
 		UserRequestModel userRequestModel = new UserRequestModel();
